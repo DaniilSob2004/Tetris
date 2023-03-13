@@ -47,7 +47,7 @@ public struct EnumColl
     public enum Color
     {
         WHITE,
-        BLACK,
+        DARK_GREEN,
         RED,
         GREEN,
         BLUE,
@@ -60,8 +60,8 @@ public struct EnumColl
     {
         switch (color)
         {
-            case Color.BLACK:
-                Console.ForegroundColor = ConsoleColor.Black;
+            case Color.DARK_GREEN:
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
                 break;
 
             case Color.RED:
