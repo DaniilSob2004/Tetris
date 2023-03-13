@@ -56,6 +56,7 @@ public struct EnumColl
         MAGENTA
     }
 
+    // Устанавливает цвет текста указанному в параметре
     public static void SetForegroundColor(Color color)
     {
         switch (color)

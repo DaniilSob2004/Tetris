@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 using static EnumColl;
 
 
-//namespace Tetris.Interface
-//{
 public class MainInterface : BaseInterface
 {
+    // создаём основной интерфейс программы
     public override void InitialInterface()
     {
-        elements.Add(new TextLabel("ГЛАВНОЕ МЕНЮ", Color.CYAN, new Coord((Console.BufferWidth / 2) - ("ГЛАВНОЕ МЕНЮ".Length / 2), Console.BufferHeight / 3)));
-        elements.Add(new TextLabel("1. Начать игру", Color.GREEN, new Coord((Console.BufferWidth / 2) - ("1. Начать игру".Length / 2), (Console.BufferHeight / 3) + 3)));
-        elements.Add(new TextLabel("2. Выйти из игры", Color.WHITE, new Coord((Console.BufferWidth / 2) - ("2. Выйти из игры".Length / 2), (Console.BufferHeight / 3) + 6)));
+        string[] arrTitles = new string[] { "ГЛАВНОЕ МЕНЮ", "1. Начать игру", "2. Выйти из игры" };
+        Color[] arrColors = new Color[] { Color.CYAN, colorSelect, Color.WHITE };
+        for (int i = 0; i < arrTitles.Length; i++)
+        {
+            elements.Add(new TextLabel(arrTitles[i], arrColors[i], new Coord((Console.BufferWidth / 2) - (arrTitles[i].Length / 2),
+                                                                             (Console.BufferHeight / 3) + i * 3)));
+        }
     }
 }
-//}

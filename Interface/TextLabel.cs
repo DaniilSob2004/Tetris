@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using static EnumColl;
 
 
-//namespace Tetris.Interface
-//{
 public class TextLabel : Element
 {
     public TextLabel(string title, Color color, Coord coord) :
@@ -20,14 +18,16 @@ public class TextLabel : Element
 
     public override void Show()
     {
+        // устанавливаем курсор, меняем цвет и отображаем метку
         Console.SetCursorPosition(coord.x, coord.y);
-        EnumColl.SetForegroundColor(color);
+        SetForegroundColor(color);
         Console.WriteLine(title);
-        EnumColl.SetForegroundColor(Color.WHITE);
+        SetForegroundColor(Color.WHITE);
     }
 
     public override void Hide()
     {
+        // удаляем текстовую метку
         for (int i = 0; i < title.Length; i++)
         {
             Console.SetCursorPosition(coord.x + i, coord.y);
@@ -35,4 +35,3 @@ public class TextLabel : Element
         }
     }
 }
-//}

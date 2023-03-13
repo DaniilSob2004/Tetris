@@ -5,8 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-//namespace Tetris.Interface
-//{
 public interface Interface
 {
     public IElement GetChoiceElem();
@@ -14,4 +12,3 @@ public interface Interface
     public void InitialInterface();
     public void Show();
 }
-//}

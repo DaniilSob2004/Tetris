@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using static EnumColl;
 
 
-//namespace Tetris.Interface
-//{
 public class Element : IElement
 {
     protected string title;
@@ -40,4 +38,3 @@ public class Element : IElement
 
     public virtual void Hide() {}
 }
-//}

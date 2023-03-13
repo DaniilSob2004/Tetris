@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using static EnumColl;
 
 
-//namespace Tetris.MyInterface
-//{
 public interface IElement
 {
     public string GetTitle();
@@ -16,4 +14,3 @@ public interface IElement
     public void Show();
     public void Hide();
 }
-//}

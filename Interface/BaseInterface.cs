@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 using static EnumColl;
 
 
-//namespace Tetris.Interface
-//{
 public class BaseInterface : Interface
 {
+    public const Color colorSelect = Color.GREEN;
     protected List<IElement> elements;
 
     public BaseInterface()
@@ -19,9 +18,10 @@ public class BaseInterface : Interface
 
     public IElement GetChoiceElem()
     {
+        // возвращает выбранный элемент по указанному цвету, иначе null
         foreach (IElement elem in elements)
         {
-            if (elem.GetColor() == Color.GREEN)
+            if (elem.GetColor() == colorSelect)
             {
                 return elem;
             }
@@ -29,9 +29,12 @@ public class BaseInterface : Interface
         return null;
     }
 
+    // устанавливает следующую выбранную пользователем метку
     public void SetChoiceNextElem()
     {
+        // список элементов которые относятся к меню пользователя
         List<IElement> elementsMenu = new List<IElement>();
+
         foreach (IElement elem in elements)
         {
             // если первый символ названия элемента это число, то добавляем в список
@@ -43,18 +46,22 @@ public class BaseInterface : Interface
 
         for (int i = 0; i < elementsMenu.Count; i++)
         {
-            if (elementsMenu[i].GetColor() == Color.GREEN)
+            // находим элемент который был выбран
+            if (elementsMenu[i].GetColor() == colorSelect)
             {
                 elementsMenu[i].SetColor(Color.WHITE);
+
+                // если это последний элемент, то делаем выбранный элемент первым 
                 if (i == elementsMenu.Count - 1)
                 {
-                    elementsMenu[0].SetColor(Color.GREEN);
+                    elementsMenu[0].SetColor(colorSelect);
                 }
+                // еиначе, делаем выбранный элемент следующий
                 else
                 {
-                    elementsMenu[i + 1].SetColor(Color.GREEN);
+                    elementsMenu[i + 1].SetColor(colorSelect);
                 }
-                Show();
+                Show();  // показываем изменения
                 break;
             }
         }
@@ -70,4 +77,3 @@ public class BaseInterface : Interface
 
     public virtual void InitialInterface() { }
 }
-//}
