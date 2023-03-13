@@ -21,18 +21,9 @@ public class TextLabel : Element
     public override void Show()
     {
         Console.SetCursorPosition(coord.x, coord.y);
-        switch (color)
-        {
-            case Color.WHITE:
-                Console.ForegroundColor = ConsoleColor.White;
-                break;
-
-            case Color.GREEN:
-                Console.ForegroundColor = ConsoleColor.Green;
-                break;
-        }
+        EnumColl.SetForegroundColor(color);
         Console.WriteLine(title);
-        Console.ForegroundColor = ConsoleColor.White;
+        EnumColl.SetForegroundColor(Color.WHITE);
     }
 
     public override void Hide()
