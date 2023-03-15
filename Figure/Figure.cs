@@ -9,7 +9,7 @@ using static EnumColl;
 public class Figure : IFigure
 {
     public const int SIZE = 3;  // размер массива(кол-во элементов по оси x и y)
-    private int[,] obj = new int[SIZE, SIZE];
+    private int[,] obj = new int[SIZE, SIZE];  // массив 3x3 для фигуры
     private TypeFigure type;
     private Color color;
 
