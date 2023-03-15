@@ -43,8 +43,6 @@ public class GameField
 
     public void Show()
     {
-        Clear();
-
         // отображаем игровое поле
         Console.SetCursorPosition(0, 0);
         for (int i = 0; i < field.GetLength(0); i++)
@@ -56,10 +54,6 @@ public class GameField
                     SetForegroundColor(Color.DARK_GREEN);
                     Console.Write(Convert.ToChar(0x2593));
                     SetForegroundColor(Color.WHITE);
-                }
-                else if (field[i, j] == (int)Field.ELEMENT)
-                {
-                    Console.Write("*");
                 }
                 else
                 {
@@ -88,24 +82,17 @@ public class GameField
 
     public void AddFigure(IObjFigure figure)
     {
-        // получаем массив нашего объекта
-        int[,] obj = figure.GetFigure().GetObj();
-        Coord coord = figure.GetCoord();
+        int[,] obj = figure.GetFigure().GetObj();  // массив частей нашей фигуры
+        Coord coord = figure.GetCoord();  // координаты фигуры
 
+        // переносим части фигуры на игровое поле
         for (int i = 0; i < Figure.SIZE; i++)
         {
             for (int x = coord.x - 1; x <= coord.x + 1; x++)
             {
                 if (obj[Figure.SIZE - i - 1, x - (coord.x - 1)] == (int)Field.ELEMENT)
                 {
-                    try
-                    {
-                        field[coord.y - i, x] = (int)Field.ELEMENT;
-                    }
-                    catch(Exception)
-                    {
-                        Console.WriteLine("AddFigure()");
-                    }
+                    field[coord.y - i, x] = (int)Field.ELEMENT;
                 }
             }
         }
@@ -113,84 +100,53 @@ public class GameField
 
     public bool CheckFinalPoint(IObjFigure figure)
     {
-        int[,] obj = figure.GetFigure().GetObj();
-        Coord coord = figure.GetCoord();
+        int[,] obj = figure.GetFigure().GetObj();  // массив частей нашей фигуры
+        Coord coord = figure.GetCoord();  // координаты фигуры
+        List<int[]> arrCoords = new List<int[]>();  // список координат
 
-        List<int[]> arrCoords = new List<int[]>();
-        for (int i = 0; i < 3; i++)
+        // если фигура не полностью появилась на поле
+        if (coord.y <= 2)
+        {
+            return false;
+        }
+
+        // заполняем по умолчанию список координат
+        for (int i = 0; i < Figure.SIZE; i++)
         {
             arrCoords.Add(new int[2] { -1, -1 });
         }
 
-
-        if (coord.y > 2)
+        // находим 3 самые низкие точки у фигуры
+        for (int i = 0; i < Figure.SIZE; i++)
         {
-            #region проверка для пола
-            /*if (field[coord.y + 1, coord.x - 1] == (int)Field.WALL &&
-                field[coord.y + 1, coord.x] == (int)Field.WALL &&
-                field[coord.y + 1, coord.x + 1] == (int)Field.WALL)
+            for (int j = 2; j >= 0; j--)
             {
-                return true;
+                if (obj[j, i] == (int)Field.ELEMENT)
+                {
+                    arrCoords[i][0] = coord.x + (i - 1);
+                    arrCoords[i][1] = coord.y + (j - 2);
+                    break;
+                }
             }
-            else
-            {*/
-            #endregion
+        }
 
-            // находим 3 самые низкие точки у фигуры
-            for (int i = 2; i >= 0; i--)
-                {
-                    if (obj[i, 0] == 1)
-                    {
-                        arrCoords[0][0] = coord.x - 1;
-                        if (i == 2) arrCoords[0][1] = coord.y;
-                        else if (i == 1) arrCoords[0][1] = coord.y - 1;
-                        else if (i == 0) arrCoords[0][1] = coord.y - 2;
-                        break;
-                    }
-                }
-            for (int i = 2; i >= 0; i--)
-                {
-                    if (obj[i, 1] == 1)
-                    {
-                        arrCoords[1][0] = coord.x;
-                        if (i == 2) arrCoords[1][1] = coord.y;
-                        else if (i == 1) arrCoords[1][1] = coord.y - 1;
-                        else if (i == 0) arrCoords[1][1] = coord.y - 2;
-                        break;
-                    }
-                }
-            for (int i = 2; i >= 0; i--)
-                {
-                    if (obj[i, 2] == 1)
-                    {
-                        arrCoords[2][0] = coord.x + 1;
-                        if (i == 2) arrCoords[2][1] = coord.y;
-                        else if (i == 1) arrCoords[2][1] = coord.y - 1;
-                        else if (i == 0) arrCoords[2][1] = coord.y - 2;
-                        break;
-                    }
-                }
+        // сортировка от самой нижней точки до верхней точки по оси y
+        SortCoordsArr(arrCoords);
 
-            // сортировка от самой нижней точки
-            SortCoordsArr(arrCoords);
-
-            // проверка каждого нижней точки на соприкосновение
-            for (int i = 0; i < arrCoords.Count; i++)
+        // проверка каждой нижней точки на соприкосновение с элементом или с полом
+        for (int i = 0; i < arrCoords.Count; i++)
             {
                 if (arrCoords[i][0] != -1 && arrCoords[i][1] != -1)
                 {
+                    // если следующая координата по y указывает на элемент или пол, то столкновение
                     if (field[arrCoords[i][1] + 1, arrCoords[i][0]] == (int)Field.ELEMENT || field[arrCoords[i][1] + 1, arrCoords[i][0]] == (int)Field.WALL)
                     {
                         return true;
                     }
                 }
             }
-            return false;
-        }
-        else
-        {
-            return false;
-        }
+
+        return false;
     }
 
     private void SortCoordsArr(List<int[]> arrCoords)
