@@ -18,7 +18,7 @@ public class BaseInterface : Interface
 
     public IElement GetChoiceElem()
     {
-        // возвращает выбранный элемент по указанному цвету, иначе null
+        // возвращает выбранный элемент по указанному цвету, иначе исключение
         foreach (IElement elem in elements)
         {
             if (elem.GetColor() == colorSelect)
@@ -26,7 +26,7 @@ public class BaseInterface : Interface
                 return elem;
             }
         }
-        return null;
+        throw new Exception("No element selected!");
     }
 
     // устанавливает следующую выбранную пользователем метку
