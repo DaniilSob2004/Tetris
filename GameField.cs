@@ -131,17 +131,17 @@ public class GameField
         }
         
         // проверка каждой нижней точки на соприкосновение с элементом или с полом
-        for (int i = 0; i < arrCoords.Length; i++)  //arrCoords.Count
+        for (int i = 0; i < arrCoords.Length; i++)
         {
-                if (arrCoords[i].x != -1 && arrCoords[i].y != -1)
+            if (arrCoords[i].x != -1 && arrCoords[i].y != -1)
+            {
+                // если следующая координата по y указывает на элемент или пол, то столкновение
+                if (field[arrCoords[i].y + 1, arrCoords[i].x] == (int)Field.ELEMENT || field[arrCoords[i].y + 1, arrCoords[i].x] == (int)Field.WALL)
                 {
-                    // если следующая координата по y указывает на элемент или пол, то столкновение
-                    if (field[arrCoords[i].y + 1, arrCoords[i].x] == (int)Field.ELEMENT || field[arrCoords[i].y + 1, arrCoords[i].x] == (int)Field.WALL)
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
+        }
 
         return false;
     }
