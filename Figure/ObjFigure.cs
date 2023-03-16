@@ -29,11 +29,11 @@ public class ObjFigure : IObjFigure
 
     public void Move(Direction direction, GameField gameField) 
     {
-        Hide();
+        Hide();  // удаляем фигуру
+
         switch (direction)
         {
             case Direction.DOWN:
-                // если столкновение с полом или с фигурами на поле, то добавляем эту фигуру на поле
                 coord.y += 1;
                 break;
 
@@ -60,7 +60,8 @@ public class ObjFigure : IObjFigure
         int[,] f = figure.GetObj();
         int y = 0;
 
-        if (coord.y <= 3) y = coord.y;
+        // насколько будет отображаться фигура, т.к она появляется сверху
+        if (coord.y <= 2) y = coord.y;
         else y = 3;
 
         SetForegroundColor(figure.GetColor());
@@ -83,6 +84,7 @@ public class ObjFigure : IObjFigure
         int[,] f = figure.GetObj();
         int y = 0;
 
+        // насколько фигура была уже отображена, т.к она появляется сверху
         if (coord.y <= 3) y = coord.y;
         else y = 3;
 
@@ -107,7 +109,9 @@ public class ObjFigure : IObjFigure
             return;
         }
 
-        Hide();
+        Hide();  // удаляем фигуру
+
+        // в зависимости от типа фигуры который был, получаем новый тип
         switch (figure.GetTypeFigure())
         {
             case TypeFigure.LINE1:
@@ -186,8 +190,8 @@ public class ObjFigure : IObjFigure
 
     private bool CheckRightCollisionWall(GameField gameField)
     {
-        int[,] obj = figure.GetObj();
-        int[,] field = gameField.GetField();
+        int[,] obj = figure.GetObj();  // массив частей нашей фигуры
+        int[,] field = gameField.GetField();  // массив игрового поля
         Coord[] arrCoords = new Coord[Figure.SIZE];  // массив координат
 
         // если фигура не полностью появилась на поле
@@ -221,6 +225,7 @@ public class ObjFigure : IObjFigure
         {
             if (arrCoords[i].x != -1 && arrCoords[i].y != -1)
             {
+                // если следующая координата по x вправо указывает на элемент или пол, то столкновение
                 if (field[arrCoords[i].y, arrCoords[i].x + 1] == (int)Field.ELEMENT || field[arrCoords[i].y, arrCoords[i].x + 1] == (int)Field.WALL)
                 {
                     return true;
@@ -233,9 +238,8 @@ public class ObjFigure : IObjFigure
 
     private bool CheckLeftCollisionWall(GameField gameField)
     {
-        int[,] obj = figure.GetObj();
-        int[,] field = gameField.GetField();
-
+        int[,] obj = figure.GetObj();  // массив частей нашей фигуры
+        int[,] field = gameField.GetField();  // массив игрового поля
         Coord[] arrCoords = new Coord[Figure.SIZE];  // массив координат
 
         // если фигура не полностью появилась на поле
@@ -269,6 +273,7 @@ public class ObjFigure : IObjFigure
         {
             if (arrCoords[i].x != -1 && arrCoords[i].y != -1)
             {
+                // если следующая координата по x влево указывает на элемент или пол, то столкновение
                 if (field[arrCoords[i].y, arrCoords[i].x - 1] == (int)Field.ELEMENT || field[arrCoords[i].y, arrCoords[i].x - 1] == (int)Field.WALL)
                 {
                     return true;
