@@ -102,7 +102,7 @@ public class GameField
     {
         int[,] obj = figure.GetFigure().GetObj();  // массив частей нашей фигуры
         Coord coord = figure.GetCoord();  // координаты фигуры
-        List<int[]> arrCoords = new List<int[]>();  // список координат
+        Coord[] arrCoords = new Coord[Figure.SIZE];  // массив координат
 
         // если фигура не полностью появилась на поле
         if (coord.y <= 2)
@@ -113,7 +113,7 @@ public class GameField
         // заполняем по умолчанию список координат
         for (int i = 0; i < Figure.SIZE; i++)
         {
-            arrCoords.Add(new int[2] { -1, -1 });
+            arrCoords[i] = new Coord(-1, -1);
         }
 
         // находим 3 самые низкие точки у фигуры
@@ -123,23 +123,20 @@ public class GameField
             {
                 if (obj[j, i] == (int)Field.ELEMENT)
                 {
-                    arrCoords[i][0] = coord.x + (i - 1);
-                    arrCoords[i][1] = coord.y + (j - 2);
+                    arrCoords[i].x = coord.x + (i - 1);
+                    arrCoords[i].y = coord.y + (j - 2);
                     break;
                 }
             }
         }
-
-        // сортировка от самой нижней точки до верхней точки по оси y
-        SortCoordsArr(arrCoords);
-
+        
         // проверка каждой нижней точки на соприкосновение с элементом или с полом
-        for (int i = 0; i < arrCoords.Count; i++)
-            {
-                if (arrCoords[i][0] != -1 && arrCoords[i][1] != -1)
+        for (int i = 0; i < arrCoords.Length; i++)  //arrCoords.Count
+        {
+                if (arrCoords[i].x != -1 && arrCoords[i].y != -1)
                 {
                     // если следующая координата по y указывает на элемент или пол, то столкновение
-                    if (field[arrCoords[i][1] + 1, arrCoords[i][0]] == (int)Field.ELEMENT || field[arrCoords[i][1] + 1, arrCoords[i][0]] == (int)Field.WALL)
+                    if (field[arrCoords[i].y + 1, arrCoords[i].x] == (int)Field.ELEMENT || field[arrCoords[i].y + 1, arrCoords[i].x] == (int)Field.WALL)
                     {
                         return true;
                     }
@@ -147,22 +144,5 @@ public class GameField
             }
 
         return false;
-    }
-
-    private void SortCoordsArr(List<int[]> arrCoords)
-    {
-        int[] temp;
-        for (int i = 1; i < arrCoords.Count; i++)
-        {
-            for (int j = 0; j < arrCoords.Count - i; j++)
-            {
-                if (arrCoords[j][1] < arrCoords[j + 1][1])
-                {
-                    temp = arrCoords[j];
-                    arrCoords[j] = arrCoords[j + 1];
-                    arrCoords[j + 1] = temp;
-                }
-            }
-        }
     }
 }
