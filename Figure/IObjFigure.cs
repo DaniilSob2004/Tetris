@@ -14,4 +14,5 @@ public interface IObjFigure
     public void Show();
     public void Hide();
     public void Turn();
+    public void FastDown(GameField gameField);
 }

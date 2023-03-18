@@ -39,7 +39,7 @@ public class ObjFigure : IObjFigure
 
             case Direction.LEFT:
                 // если столкновения с левой стеной нет, то двигаем
-                if (!CheckLeftCollisionWall(gameField))
+                if (!gameField.CheckLeftCollision(this))
                 {
                     coord.x -= 1;
                 }
@@ -47,7 +47,7 @@ public class ObjFigure : IObjFigure
 
             case Direction.RIGHT:
                 // если столкновения с правой стеной нет, то двигаем
-                if (!CheckRightCollisionWall(gameField))
+                if (!gameField.CheckRightCollision(this))
                 {
                     coord.x += 1;
                 }
@@ -82,7 +82,7 @@ public class ObjFigure : IObjFigure
     public void Hide() 
     {
         int[,] f = figure.GetObj();
-        int y = 0;
+        int y;
 
         // насколько фигура была уже отображена, т.к она появляется сверху
         if (coord.y <= 3) y = coord.y;
@@ -188,99 +188,15 @@ public class ObjFigure : IObjFigure
         }
     }
 
-    private bool CheckRightCollisionWall(GameField gameField)
+    public void FastDown(GameField gameField)
     {
-        int[,] obj = figure.GetObj();  // массив частей нашей фигуры
-        int[,] field = gameField.GetField();  // массив игрового поля
-        Coord[] arrCoords = new Coord[Figure.SIZE];  // массив координат
-
-        // если фигура не полностью появилась на поле
-        if (coord.y <= 2)
+        // пока фигура не коснулась пола или другой фигуры
+        while (!gameField.CheckFinalPoint(this))
         {
-            return false;
+            // двигаем и отображаем
+            Move(Direction.DOWN, gameField);
+            Show();
+            Thread.Sleep(10);
         }
-
-        // заполняем по умолчанию список координат
-        for (int i = 0; i < Figure.SIZE; i++)
-        {
-            arrCoords[i] = new Coord(-1, -1);
-        }
-
-        // находим 3 самые правые точки у фигуры
-        for (int i = 0; i < Figure.SIZE; i++)
-        {
-            for (int j = Figure.SIZE - 1; j >= 0; j--)
-            {
-                if (obj[i, j] == (int)Field.ELEMENT)
-                {
-                    arrCoords[i].x = coord.x + (j - 1);
-                    arrCoords[i].y = coord.y + (i - 2);
-                    break;
-                }
-            }
-        }
-
-        // проверка каждой правой точки на соприкосновение с элементом или со стеной
-        for (int i = 0; i < arrCoords.Length; i++)
-        {
-            if (arrCoords[i].x != -1 && arrCoords[i].y != -1)
-            {
-                // если следующая координата по x вправо указывает на элемент или пол, то столкновение
-                if (field[arrCoords[i].y, arrCoords[i].x + 1] == (int)Field.ELEMENT || field[arrCoords[i].y, arrCoords[i].x + 1] == (int)Field.WALL)
-                {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    private bool CheckLeftCollisionWall(GameField gameField)
-    {
-        int[,] obj = figure.GetObj();  // массив частей нашей фигуры
-        int[,] field = gameField.GetField();  // массив игрового поля
-        Coord[] arrCoords = new Coord[Figure.SIZE];  // массив координат
-
-        // если фигура не полностью появилась на поле
-        if (coord.y <= 2)
-        {
-            return false;
-        }
-
-        // заполняем по умолчанию список координат
-        for (int i = 0; i < Figure.SIZE; i++)
-        {
-            arrCoords[i] = new Coord(-1, -1);
-        }
-
-        // находим 3 самые левые точки у фигуры
-        for (int i = 0; i < Figure.SIZE; i++)
-        {
-            for (int j = 0; j < Figure.SIZE; j++)
-            {
-                if (obj[i, j] == (int)Field.ELEMENT)
-                {
-                    arrCoords[i].x = coord.x + (j - 1);
-                    arrCoords[i].y = coord.y + (i - 2);
-                    break;
-                }
-            }
-        }
-
-        // проверка каждой левой точки на соприкосновение с элементом или со стеной
-        for (int i = 0; i < arrCoords.Length; i++)
-        {
-            if (arrCoords[i].x != -1 && arrCoords[i].y != -1)
-            {
-                // если следующая координата по x влево указывает на элемент или пол, то столкновение
-                if (field[arrCoords[i].y, arrCoords[i].x - 1] == (int)Field.ELEMENT || field[arrCoords[i].y, arrCoords[i].x - 1] == (int)Field.WALL)
-                {
-                    return true;
-                }
-            }
-        }
-        
-        return false;
     }
 }
