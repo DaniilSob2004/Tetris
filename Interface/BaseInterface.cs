@@ -37,8 +37,8 @@ public class BaseInterface : Interface
 
         foreach (IElement elem in elements)
         {
-            // если первый символ названия элемента это число, то добавляем в список
-            if (char.IsDigit(elem.GetTitle()[0]))
+            // если первый символ названия элемента это (пробел), то добавляем в список
+            if (elem.GetTitle()[0] == ' ')
             {
                 elementsMenu.Add(elem);
             }
