@@ -12,11 +12,6 @@ public class GameField
     public const int HEIGHT_F = 20;
     private int[,] field = new int[HEIGHT_F, WIDTH_F];
 
-    public GameField()
-    {
-        BeginSetting();
-    }
-
     private void BeginSetting()
     {
         // устанавливаем начальные значения игрового поля (стены и пустоту)
@@ -34,6 +29,35 @@ public class GameField
                 }
             }
         }
+    }
+
+    private int GetNumCleanLine()
+    {
+        bool flag;
+
+        for (int i = 0; i < HEIGHT_F; i++)
+        {
+            flag = true;
+            for (int j = 1; j < WIDTH_F - 1; j++)
+            {
+                if (field[i, j] != (int)Field.ELEMENT)
+                {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public GameField()
+    {
+        BeginSetting();
     }
 
     public int[,] GetField()
@@ -98,51 +122,56 @@ public class GameField
         }
     }
 
-    public bool CheckFinalPoint(IObjFigure figure)
+    public void CleanLine(ref int nLine)
     {
-        int[,] obj = figure.GetFigure().GetObj();  // массив частей нашей фигуры
-        Coord coord = figure.GetCoord();  // координаты фигуры
-        Coord[] arrCoords = new Coord[Figure.SIZE];  // массив координат
+        int y = 0;
+        Random r = new Random();
 
-        // если фигура не полностью появилась на поле
-        if (coord.y <= 2)
+        while (y != -1)
         {
-            return false;
-        }
-
-        // заполняем по умолчанию список координат
-        for (int i = 0; i < Figure.SIZE; i++)
-        {
-            arrCoords[i] = new Coord(-1, -1);
-        }
-
-        // находим 3 самые низкие точки у фигуры
-        for (int i = 0; i < Figure.SIZE; i++)
-        {
-            for (int j = 2; j >= 0; j--)
+            y = GetNumCleanLine();  // получаем координату y в которой заполнена линия
+            if (y != -1)
             {
-                if (obj[j, i] == (int)Field.ELEMENT)
+                // удаление заполненой линии
+                for (int j = 1; j < WIDTH_F - 1; j++)
                 {
-                    arrCoords[i].x = coord.x + (i - 1);
-                    arrCoords[i].y = coord.y + (j - 2);
-                    break;
+                    if (field[y, j] == (int)Field.ELEMENT)
+                    {
+                        field[y, j] = (int)Field.EMPTY;
+
+                        Console.SetCursorPosition(j, y);
+                        Console.Write(" ");
+                        Thread.Sleep(20);
+                    }
                 }
+
+                // все верхние элементы фигур на поле опускаются на 1 координату по у вниз
+                for (int i = y - 1; i > 0; i--)
+                {
+                    for (int j = 1; j < WIDTH_F - 1; j++)
+                    {
+                        if (field[i, j] == (int)Field.ELEMENT)
+                        {
+                            // запоминаем цвет элемента который был на прошлой позиции
+                            ConsoleColor color = MyConsole.GetColor((short)j, (short)i);
+
+                            // стираем элемент который был на прошлой позиции
+                            Console.SetCursorPosition(j, i);
+                            Console.Write(" ");
+                            field[i, j] = (int)Field.EMPTY;
+
+                            // отображаем элемент в новой позиции
+                            Console.SetCursorPosition(j, i + 1);
+                            Console.ForegroundColor = color;
+                            Console.WriteLine(Convert.ToChar(0x25A0));
+                            field[i + 1, j] = (int)Field.ELEMENT;
+                        }
+                    }
+                }
+
+                // кол-во линий
+                nLine++;
             }
         }
-        
-        // проверка каждой нижней точки на соприкосновение с элементом или с полом
-        for (int i = 0; i < arrCoords.Length; i++)
-        {
-            if (arrCoords[i].x != -1 && arrCoords[i].y != -1)
-            {
-                // если следующая координата по y указывает на элемент или пол, то столкновение
-                if (field[arrCoords[i].y + 1, arrCoords[i].x] == (int)Field.ELEMENT || field[arrCoords[i].y + 1, arrCoords[i].x] == (int)Field.WALL)
-                {
-                    return true;
-                }
-            }
-        }
-
-        return false;
     }
 }

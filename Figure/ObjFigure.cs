@@ -39,7 +39,7 @@ public class ObjFigure : IObjFigure
 
             case Direction.LEFT:
                 // если столкновения с левой стеной нет, то двигаем
-                if (!gameField.CheckLeftCollision(this))
+                if (!CheckCollision.CheckLeftCollision(this, gameField))
                 {
                     coord.x -= 1;
                 }
@@ -47,7 +47,7 @@ public class ObjFigure : IObjFigure
 
             case Direction.RIGHT:
                 // если столкновения с правой стеной нет, то двигаем
-                if (!gameField.CheckRightCollision(this))
+                if (!CheckCollision.CheckRightCollision(this, gameField))
                 {
                     coord.x += 1;
                 }
@@ -72,7 +72,8 @@ public class ObjFigure : IObjFigure
                 if (f[Figure.SIZE - i - 1, x - (coord.x - 1)] == (int)Field.ELEMENT)
                 {
                     Console.SetCursorPosition(x, coord.y - i);
-                    Console.Write("*");
+                    //Console.Write("*");
+                    Console.WriteLine(Convert.ToChar(0x25A0));
                 }
             }
         }
@@ -191,7 +192,7 @@ public class ObjFigure : IObjFigure
     public void FastDown(GameField gameField)
     {
         // пока фигура не коснулась пола или другой фигуры
-        while (!gameField.CheckFinalPoint(this))
+        while (!CheckCollision.CheckFinalPoint(this, gameField))
         {
             // двигаем и отображаем
             Move(Direction.DOWN, gameField);
