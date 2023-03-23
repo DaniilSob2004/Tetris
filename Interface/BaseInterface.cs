@@ -29,6 +29,19 @@ public class BaseInterface : Interface
         throw new Exception("No element selected!");
     }
 
+    public IElement GetElementByValue(string value)
+    {
+        foreach (IElement elem in elements)
+        {
+            //if (elem.GetValue() == value)
+            if (elem.GetValue().Contains(value))
+            {
+                return elem;
+            }
+        }
+        throw new Exception("No element by this value!");
+    }
+
     // устанавливает следующую выбранную пользователем метку
     public void SetChoiceNextElem()
     {
@@ -38,7 +51,7 @@ public class BaseInterface : Interface
         foreach (IElement elem in elements)
         {
             // если первый символ названия элемента это (пробел), то добавляем в список
-            if (elem.GetTitle()[0] == ' ')
+            if (elem.GetValue()[0] == ' ')
             {
                 elementsMenu.Add(elem);
             }

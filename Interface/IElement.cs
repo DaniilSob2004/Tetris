@@ -8,9 +8,10 @@ using static EnumColl;
 
 public interface IElement
 {
-    public string GetTitle();
     public Color GetColor();
     public void SetColor(Color color);
+    public string GetValue();
+    public void SetValue(object value);
     public void Show();
     public void Hide();
 }

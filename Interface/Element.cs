@@ -8,20 +8,20 @@ using static EnumColl;
 
 public class Element : IElement
 {
-    protected string title;
+    protected string value;
     protected Color color;
     protected Coord coord;
 
-    public Element(string title, Color color, Coord coord)
+    public Element(string value, Color color, Coord coord)
     {
-        this.title = title;
-        this.color = color;
+        this.value = value;
+        SetColor(color);
         this.coord = coord;
     }
 
-    public string GetTitle()
+    public string GetValue()
     {
-        return title;
+        return value;
     }
 
     public Color GetColor()
@@ -33,6 +33,8 @@ public class Element : IElement
     {
         this.color = color;
     }
+
+    public virtual void SetValue(object value) {}
 
     public virtual void Show() {}
 
