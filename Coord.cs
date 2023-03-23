@@ -10,7 +10,7 @@ public struct Coord
     public int x;
     public int y;
 
-    public Coord(int x, int y)
+    public Coord(int x = -1, int y = -1)
     {
         this.x = x;
         this.y = y;

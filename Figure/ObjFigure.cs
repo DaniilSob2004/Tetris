@@ -11,10 +11,10 @@ public class ObjFigure : IObjFigure
     private IFigure figure;
     private Coord coord;
 
-    public ObjFigure(TypeFigure type)
+    public ObjFigure(TypeFigure type, Coord coord)
     {
         figure = PrototypeFigure.GetByType(type);
-        coord = new Coord((GameField.WIDTH_F / 2) - 1, 0);
+        this.coord = coord;
     }
 
     public IFigure GetFigure()
@@ -72,7 +72,6 @@ public class ObjFigure : IObjFigure
                 if (f[Figure.SIZE - i - 1, x - (coord.x - 1)] == (int)Field.ELEMENT)
                 {
                     Console.SetCursorPosition(x, coord.y - i);
-                    //Console.Write("*");
                     Console.WriteLine(Convert.ToChar(0x25A0));
                 }
             }
