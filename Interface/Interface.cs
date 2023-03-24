@@ -12,4 +12,5 @@ public interface Interface
     public void SetChoiceNextElem();
     public void InitialInterface();
     public void Show();
+    public IElement this[string value] { get; }
 }

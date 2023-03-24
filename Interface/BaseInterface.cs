@@ -31,9 +31,9 @@ public class BaseInterface : Interface
 
     public IElement GetElementByValue(string value)
     {
+        // возвращает элемент по значению 'value'
         foreach (IElement elem in elements)
         {
-            //if (elem.GetValue() == value)
             if (elem.GetValue().Contains(value))
             {
                 return elem;
@@ -85,6 +85,14 @@ public class BaseInterface : Interface
         foreach (IElement elem in elements)
         {
             elem.Show();
+        }
+    }
+
+    public IElement this[string value]
+    {
+        get
+        {
+            return GetElementByValue(value);
         }
     }
 
