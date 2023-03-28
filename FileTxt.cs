@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 public class FileTxt
 {
     private string fileName;
+    private static Regex reg = new Regex(@"^[\w\d_\-+ ]+\.txt$");
 
     private void CheckNull(string value)
     {
@@ -18,7 +19,7 @@ public class FileTxt
         }
     }
 
-    public FileTxt(string fileName)
+    public FileTxt(string fileName = "")
     {
         FileName = fileName;
     }
@@ -28,7 +29,6 @@ public class FileTxt
         get { return fileName; }
         set
         {
-            Regex reg = new Regex(@"^[\w\d_\-+ ]+\.txt$");
             Match result = reg.Match(value);
 
             if (!result.Success) throw new Exception("Invalid filename!");

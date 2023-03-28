@@ -132,6 +132,9 @@ public class GameField
             y = GetNumCleanLine();  // получаем координату y в которой заполнена линия
             if (y != -1)
             {
+                // воспроизводим звук
+                GameSound.DelLine();
+
                 // удаление заполненой линии
                 for (int j = 1; j < WIDTH_F - 1; j++)
                 {
