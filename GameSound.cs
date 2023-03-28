@@ -34,6 +34,12 @@ public class GameSound
         sound.Play();
     }
 
+    public static void BrokeRecord()
+    {
+        sound.SoundLocation = @"Sound\broke_record.wav";
+        sound.Play();
+    }
+
     public static void Died()
     {
         sound.SoundLocation = @"Sound\died.wav";

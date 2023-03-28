@@ -19,7 +19,7 @@ public class FileTxt
         }
     }
 
-    public FileTxt(string fileName = "")
+    public FileTxt(string fileName)
     {
         FileName = fileName;
     }
