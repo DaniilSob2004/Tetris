@@ -12,7 +12,7 @@ public class GameInterface : BaseInterface
     public override void InitialInterface()
     {
         // характеристики
-        string[] arrTitles = new string[] { "Время:  00:00", "Рекорд:  100", "Очки:  0", "Фигура:  " };
+        string[] arrTitles = new string[] { "Время:  00:00", "Рекорд:  0", "Очки:  0", "Фигура:  " };
         Color[] arrColors = new Color[] { Color.CYAN, Color.YELLOW, Color.RED, Color.BLUE };
 
         for (int i = 0; i < arrTitles.Length; i++)
