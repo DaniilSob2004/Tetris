@@ -5,12 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-public interface Interface
+namespace Tetris
 {
-    public IElement GetChoiceElem();
-    public IElement GetElementByValue(string value);
-    public void SetChoiceNextElem();
-    public void InitialInterface();
-    public void Show();
-    public IElement this[string value] { get; }
+    public interface Interface
+    {
+        public IElement GetChoiceElem();
+        public IElement GetElementByValue(string value);
+        public void SetChoiceNextElem();
+        public void InitialInterface();
+        public void Show();
+        public IElement this[string value] { get; }
+    }
 }

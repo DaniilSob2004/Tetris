@@ -6,37 +6,40 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 
 
-public class MyConsole
+namespace Tetris
 {
-    public static ConsoleColor GetColor(short x, short y)
+    public class MyConsole
     {
-        var colors = new ushort[1];
-        uint numberOfCharactersRead;
-
-        if (ReadConsoleOutputAttribute(GetStdHandle(-11), colors, 1, new Coord(x, y), out numberOfCharactersRead))
+        public static ConsoleColor GetColor(short x, short y)
         {
-            return (ConsoleColor)(colors[0] % 16);
+            var colors = new ushort[1];
+            uint numberOfCharactersRead;
+
+            if (ReadConsoleOutputAttribute(GetStdHandle(-11), colors, 1, new Coord(x, y), out numberOfCharactersRead))
+            {
+                return (ConsoleColor)(colors[0] % 16);
+            }
+            return ConsoleColor.White;
         }
-        return ConsoleColor.White;
-    }
 
-    // извлекает дескриптор для стандартного ввода данных, стандартного вывода или стандартной ошибки устройства
-    // классы-дескрипторы — управляемые классы, имеющие указатель на родной класс в качестве члена
-    [DllImport("kernel32.dll", SetLastError = true)]
-    static extern IntPtr GetStdHandle(int nStdHandle);
+        // извлекает дескриптор для стандартного ввода данных, стандартного вывода или стандартной ошибки устройства
+        // классы-дескрипторы — управляемые классы, имеющие указатель на родной класс в качестве члена
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern IntPtr GetStdHandle(int nStdHandle);
 
-    [DllImport("kernel32.dll", SetLastError = true)]
-    static extern bool ReadConsoleOutputAttribute(IntPtr hConsoleOutput, [Out] ushort[] lpAttribute, uint length, Coord bufferCoord, out uint lpNumberOfCharactersRead);
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool ReadConsoleOutputAttribute(IntPtr hConsoleOutput, [Out] ushort[] lpAttribute, uint length, Coord bufferCoord, out uint lpNumberOfCharactersRead);
 
-    public struct Coord
-    {
-        public short X;
-        public short Y;
-
-        public Coord(short x, short y)
+        public struct Coord
         {
-            X = x;
-            Y = y;
+            public short X;
+            public short Y;
+
+            public Coord(short x, short y)
+            {
+                X = x;
+                Y = y;
+            }
         }
     }
 }

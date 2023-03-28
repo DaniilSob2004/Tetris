@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 
 
-public class OpenBrowser
+namespace Tetris
 {
-    public static void OpenGitHub()
+    public class OpenBrowser
     {
-        // открываем ссылку на мой гитхаб в браузере 
-        string url = "https://github.com/DaniilSob2004";
-        Process.Start(new ProcessStartInfo("cmd", $"/c start {url}"));
+        public static void OpenGitHub()
+        {
+            // открываем ссылку на мой гитхаб в браузере 
+            string url = "https://github.com/DaniilSob2004";
+            Process.Start(new ProcessStartInfo("cmd", $"/c start {url}"));
+        }
     }
 }

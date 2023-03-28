@@ -3,98 +3,101 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static EnumColl;
+using static Tetris.EnumColl;
 
 
-public class BaseInterface : Interface
+namespace Tetris
 {
-    public const Color colorSelect = Color.GREEN;
-    protected List<IElement> elements;
-
-    public BaseInterface()
+    public class BaseInterface : Interface
     {
-        elements = new List<IElement>();
-    }
+        public const Color colorSelect = Color.GREEN;
+        protected List<IElement> elements;
 
-    public IElement GetChoiceElem()
-    {
-        // возвращает выбранный элемент по указанному цвету, иначе исключение
-        foreach (IElement elem in elements)
+        public BaseInterface()
         {
-            if (elem.GetColor() == colorSelect)
-            {
-                return elem;
-            }
-        }
-        throw new Exception("No element selected!");
-    }
-
-    public IElement GetElementByValue(string value)
-    {
-        // возвращает элемент по значению 'value'
-        foreach (IElement elem in elements)
-        {
-            if (elem.GetValue().Contains(value))
-            {
-                return elem;
-            }
-        }
-        throw new Exception("No element by this value!");
-    }
-
-    // устанавливает следующую выбранную пользователем метку
-    public void SetChoiceNextElem()
-    {
-        // список элементов которые относятся к меню пользователя
-        List<IElement> elementsMenu = new List<IElement>();
-
-        foreach (IElement elem in elements)
-        {
-            // если первый символ названия элемента это (пробел), то добавляем в список
-            if (elem.GetValue()[0] == ' ')
-            {
-                elementsMenu.Add(elem);
-            }
+            elements = new List<IElement>();
         }
 
-        for (int i = 0; i < elementsMenu.Count; i++)
+        public IElement GetChoiceElem()
         {
-            // находим элемент который был выбран
-            if (elementsMenu[i].GetColor() == colorSelect)
+            // возвращает выбранный элемент по указанному цвету, иначе исключение
+            foreach (IElement elem in elements)
             {
-                elementsMenu[i].SetColor(Color.WHITE);
-
-                // если это последний элемент, то делаем выбранный элемент первым 
-                if (i == elementsMenu.Count - 1)
+                if (elem.GetColor() == colorSelect)
                 {
-                    elementsMenu[0].SetColor(colorSelect);
+                    return elem;
                 }
-                // еиначе, делаем выбранный элемент следующий
-                else
+            }
+            throw new Exception("No element selected!");
+        }
+
+        public IElement GetElementByValue(string value)
+        {
+            // возвращает элемент по значению 'value'
+            foreach (IElement elem in elements)
+            {
+                if (elem.GetValue().Contains(value))
                 {
-                    elementsMenu[i + 1].SetColor(colorSelect);
+                    return elem;
                 }
-                Show();  // показываем изменения
-                break;
+            }
+            throw new Exception("No element by this value!");
+        }
+
+        // устанавливает следующую выбранную пользователем метку
+        public void SetChoiceNextElem()
+        {
+            // список элементов которые относятся к меню пользователя
+            List<IElement> elementsMenu = new List<IElement>();
+
+            foreach (IElement elem in elements)
+            {
+                // если первый символ названия элемента это (пробел), то добавляем в список
+                if (elem.GetValue()[0] == ' ')
+                {
+                    elementsMenu.Add(elem);
+                }
+            }
+
+            for (int i = 0; i < elementsMenu.Count; i++)
+            {
+                // находим элемент который был выбран
+                if (elementsMenu[i].GetColor() == colorSelect)
+                {
+                    elementsMenu[i].SetColor(Color.WHITE);
+
+                    // если это последний элемент, то делаем выбранный элемент первым 
+                    if (i == elementsMenu.Count - 1)
+                    {
+                        elementsMenu[0].SetColor(colorSelect);
+                    }
+                    // еиначе, делаем выбранный элемент следующий
+                    else
+                    {
+                        elementsMenu[i + 1].SetColor(colorSelect);
+                    }
+                    Show();  // показываем изменения
+                    break;
+                }
             }
         }
-    }
 
-    public void Show()
-    {
-        foreach (IElement elem in elements)
+        public void Show()
         {
-            elem.Show();
+            foreach (IElement elem in elements)
+            {
+                elem.Show();
+            }
         }
-    }
 
-    public IElement this[string value]
-    {
-        get
+        public IElement this[string value]
         {
-            return GetElementByValue(value);
+            get
+            {
+                return GetElementByValue(value);
+            }
         }
-    }
 
-    public virtual void InitialInterface() { }
+        public virtual void InitialInterface() { }
+    }
 }

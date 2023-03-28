@@ -3,45 +3,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static EnumColl;
+using static Tetris.EnumColl;
 
 
-public class Figure : IFigure
+namespace Tetris
 {
-    public const int SIZE = 3;  // размер массива(кол-во элементов по оси x и y)
-    private int[,] obj = new int[SIZE, SIZE];  // массив 3x3 для фигуры
-    private TypeFigure type;
-    private Color color;
-
-    // конструктор с параметром этого же объекта
-    public Figure(IFigure figure) :
-        this(figure.GetObj(), figure.GetTypeFigure(), figure.GetColor()) { }
-
-    public Figure(int[,] obj, TypeFigure type, Color color)
+    public class Figure : IFigure
     {
-        this.obj = obj;
-        this.type = type;
-        this.color = color;
-    }
+        public const int SIZE = 3;  // размер массива(кол-во элементов по оси x и y)
+        private int[,] obj = new int[SIZE, SIZE];  // массив 3x3 для фигуры
+        private TypeFigure type;
+        private Color color;
 
-    public int[,] GetObj()
-    {
-        return obj;
-    }
+        // конструктор с параметром этого же объекта
+        public Figure(IFigure figure) :
+            this(figure.GetObj(), figure.GetTypeFigure(), figure.GetColor())
+        { }
 
-    public TypeFigure GetTypeFigure()
-    {
-        return type;
-    }
+        public Figure(int[,] obj, TypeFigure type, Color color)
+        {
+            this.obj = obj;
+            this.type = type;
+            this.color = color;
+        }
 
-    public Color GetColor()
-    {
-        return color;
-    }
+        public int[,] GetObj()
+        {
+            return obj;
+        }
 
-    public IFigure Clone()
-    {
-        // возвращается клон этого же объекта
-        return new Figure(this);
+        public TypeFigure GetTypeFigure()
+        {
+            return type;
+        }
+
+        public Color GetColor()
+        {
+            return color;
+        }
+
+        public IFigure Clone()
+        {
+            // возвращается клон этого же объекта
+            return new Figure(this);
+        }
     }
 }

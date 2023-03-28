@@ -3,43 +3,46 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static EnumColl;
+using static Tetris.EnumColl;
 
 
-public class FigureElement : IElement
+namespace Tetris
 {
-    public const string value = "Figure";
-    private IObjFigure objFigure;
-
-    public FigureElement(IObjFigure objFigure)
+    public class FigureElement : IElement
     {
-        SetValue(objFigure);
-    }
+        public const string value = "Figure";
+        private IObjFigure objFigure;
 
-    public string GetValue()
-    {
-        return value;
-    }
+        public FigureElement(IObjFigure objFigure)
+        {
+            SetValue(objFigure);
+        }
 
-    public void SetValue(object value)
-    {
-        objFigure = (IObjFigure)value;
-    }
+        public string GetValue()
+        {
+            return value;
+        }
 
-    public Color GetColor()
-    {
-        return objFigure.GetFigure().GetColor();
-    }
+        public void SetValue(object value)
+        {
+            objFigure = (IObjFigure)value;
+        }
 
-    public void SetColor(Color color) {}
+        public Color GetColor()
+        {
+            return objFigure.GetFigure().GetColor();
+        }
 
-    public void Show()
-    {
-        objFigure.Show();
-    }
+        public void SetColor(Color color) { }
 
-    public void Hide()
-    {
-        objFigure.Hide();
+        public void Show()
+        {
+            objFigure.Show();
+        }
+
+        public void Hide()
+        {
+            objFigure.Hide();
+        }
     }
 }
