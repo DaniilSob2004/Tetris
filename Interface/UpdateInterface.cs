@@ -64,4 +64,26 @@ namespace Tetris
             game.UserInterface["Figure"].Show();
         }
     }
+
+    public class Pause : IUpdatableInterface
+    {
+        public void Update(Game game)
+        {
+            // меняем текст
+            game.UserInterface["Пауза"].Hide();
+            game.UserInterface["Пауза"].SetValue(" Продолжить");
+            game.UserInterface["Продолжить"].Show();
+        }
+    }
+
+    public class Continue : IUpdatableInterface
+    {
+        public void Update(Game game)
+        {
+            // меняем текст
+            game.UserInterface["Продолжить"].Hide();
+            game.UserInterface["Продолжить"].SetValue(" Пауза");
+            game.UserInterface["Пауза"].Show();
+        }
+    }
 }
