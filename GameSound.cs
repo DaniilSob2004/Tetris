@@ -10,42 +10,48 @@ namespace Tetris
 {
     public class GameSound
     {
+        public const string DIR = "Sound";
         private static SoundPlayer sound = new SoundPlayer();
+
+        private static void PlaySound(string path)
+        {
+            sound.SoundLocation = path;
+            sound.Play();
+        }
 
         public static void ChoiceMenu()
         {
-            sound.SoundLocation = @"Sound\choice.wav";
-            sound.Play();
+            PlaySound(@$"{DIR}\choice.wav");
         }
 
         public static void ClickBtn()
         {
-            sound.SoundLocation = @"Sound\click.wav";
-            sound.Play();
+            PlaySound(@$"{DIR}\click.wav");
         }
 
         public static void DownFigure()
         {
-            sound.SoundLocation = @"Sound\down_figure.wav";
-            sound.Play();
+            PlaySound(@$"{DIR}\down_figure.wav");
+        }
+
+        public static void ChangeFigure()
+        {
+            PlaySound(@$"{DIR}\change_figure.wav");
         }
 
         public static void DelLine()
         {
-            sound.SoundLocation = @"Sound\del_line.wav";
-            sound.Play();
+            PlaySound(@$"{DIR}\del_line.wav");
         }
 
         public static void BrokeRecord()
         {
-            sound.SoundLocation = @"Sound\broke_record.wav";
-            sound.Play();
+            PlaySound(@$"{DIR}\broke_record.wav");
         }
 
         public static void Died()
         {
-            sound.SoundLocation = @"Sound\died.wav";
-            sound.Play();
+            PlaySound(@$"{DIR}\died.wav");
         }
     }
 }

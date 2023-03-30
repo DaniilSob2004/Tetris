@@ -10,15 +10,17 @@ namespace Tetris
 {
     public class FileTxt
     {
+        public const string DIR = "Files";
         private string fileName;
-        private static Regex reg = new Regex(@"^[\w\d_\-+ ]+\.txt$");
 
-        private void CheckNull(string value)
+        private bool CheckNull(string value)
         {
-            if (value == null)
-            {
-                throw new Exception("Error, nullReference in variable file value!");
-            }
+            return value != null;
+        }
+
+        private bool IsValidFile(string fileName)
+        {
+            return CheckNull(fileName) && (File.Exists($@"{DIR}\{fileName}"));
         }
 
         public FileTxt(string fileName)
@@ -31,9 +33,11 @@ namespace Tetris
             get { return fileName; }
             set
             {
-                Match result = reg.Match(value);
+                // проверка на null
+                if (!CheckNull(value)) throw new Exception("Error, nullReference in variable file value!");
 
-                if (!result.Success) throw new Exception("Invalid filename!");
+                // проверка существует ли файл
+                if (!IsValidFile(value)) throw new Exception("No such file!");
 
                 fileName = value;
             }
@@ -43,7 +47,7 @@ namespace Tetris
         {
             string value;
 
-            using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+            using (var fs = new FileStream($@"{DIR}\{fileName}", FileMode.Open, FileAccess.Read))
             {
                 StreamReader sr = new StreamReader(fs);
                 value = sr.ReadToEnd();
@@ -55,9 +59,10 @@ namespace Tetris
 
         public void WriteFile(string value)
         {
-            CheckNull(value);
+            // проверка на null
+            if (!CheckNull(value)) throw new Exception("Error, nullReference in variable file value!");
 
-            using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Write))
+            using (var fs = new FileStream($@"{DIR}\{fileName}", FileMode.Open, FileAccess.Write))
             {
                 StreamWriter sw = new StreamWriter(fs);
                 sw.Write(value);
