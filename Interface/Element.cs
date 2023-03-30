@@ -8,7 +8,7 @@ using static Tetris.EnumColl;
 
 namespace Tetris
 {
-    public class Element : IElement
+    public abstract class Element : IElement
     {
         protected string value;
         protected Color color;
@@ -36,10 +36,8 @@ namespace Tetris
             this.color = color;
         }
 
-        public virtual void SetValue(object value) { }
-
-        public virtual void Show() { }
-
-        public virtual void Hide() { }
+        public abstract void SetValue(object value);
+        public abstract void Show();
+        public abstract void Hide();
     }
 }

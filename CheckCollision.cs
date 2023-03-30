@@ -10,7 +10,7 @@ namespace Tetris
 {
     public class CheckCollision
     {
-        public static bool CheckFinalPoint(IObjFigure figure, GameField gameField)
+        public static bool CheckFinalPoint(BaseObjFigure figure, GameField gameField)
         {
             int[,] field = gameField.GetField();  // массив игрового поля
             int[,] obj = figure.GetFigure().GetObj();  // массив нашей фигуры
@@ -59,7 +59,7 @@ namespace Tetris
             return false;
         }
 
-        public static bool CheckGameOver(IObjFigure figure, GameField gameField)
+        public static bool CheckGameOver(BaseObjFigure figure, GameField gameField)
         {
             int[,] field = gameField.GetField();  // массив игрового поля
             int[,] obj = figure.GetFigure().GetObj();  // массив нашей фигуры
@@ -84,7 +84,7 @@ namespace Tetris
             return false;
         }
 
-        public static bool CheckLeftCollision(IObjFigure figure, GameField gameField)
+        public static bool CheckLeftCollision(BaseObjFigure figure, GameField gameField)
         {
             int[,] field = gameField.GetField();  // массив игрового поля
             int[,] obj = figure.GetFigure().GetObj();  // массив нашей фигуры
@@ -133,7 +133,7 @@ namespace Tetris
             return false;
         }
 
-        public static bool CheckRightCollision(IObjFigure figure, GameField gameField)
+        public static bool CheckRightCollision(BaseObjFigure figure, GameField gameField)
         {
             int[,] field = gameField.GetField();  // массив игрового поля
             int[,] obj = figure.GetFigure().GetObj();  // массив нашей фигуры

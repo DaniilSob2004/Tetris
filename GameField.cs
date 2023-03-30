@@ -106,7 +106,7 @@ namespace Tetris
             }
         }
 
-        public void AddFigure(IObjFigure figure)
+        public void AddFigure(BaseObjFigure figure)
         {
             int[,] obj = figure.GetFigure().GetObj();  // массив частей нашей фигуры
             Coord coord = figure.GetCoord();  // координаты фигуры

@@ -11,9 +11,9 @@ namespace Tetris
     public class FigureElement : IElement
     {
         public const string value = "Figure";
-        private IObjFigure objFigure;
+        private BaseObjFigure objFigure;
 
-        public FigureElement(IObjFigure objFigure)
+        public FigureElement(BaseObjFigure objFigure)
         {
             SetValue(objFigure);
         }
@@ -25,7 +25,7 @@ namespace Tetris
 
         public void SetValue(object value)
         {
-            objFigure = (IObjFigure)value;
+            objFigure = (BaseObjFigure)value;
         }
 
         public Color GetColor()

@@ -8,28 +8,13 @@ using static Tetris.EnumColl;
 
 namespace Tetris
 {
-    public class ObjFigure : IObjFigure
+    public class ObjFigure : BaseObjFigure
     {
-        private IFigure figure;
-        private Coord coord;
+        public ObjFigure(TypeFigure type, Coord coord) : 
+            base(type, coord)
+        { }
 
-        public ObjFigure(TypeFigure type, Coord coord)
-        {
-            figure = PrototypeFigure.GetByType(type);
-            this.coord = coord;
-        }
-
-        public IFigure GetFigure()
-        {
-            return figure;
-        }
-
-        public Coord GetCoord()
-        {
-            return coord;
-        }
-
-        public void Move(Direction direction, GameField gameField)
+        public override void Move(Direction direction, GameField gameField)
         {
             Hide();  // удаляем фигуру
 
@@ -57,7 +42,7 @@ namespace Tetris
             }
         }
 
-        public void Show()
+        public override void Show()
         {
             int[,] f = figure.GetObj();
             int y = 0;
@@ -81,7 +66,7 @@ namespace Tetris
             SetForegroundColor(Color.WHITE);
         }
 
-        public void Hide()
+        public override void Hide()
         {
             int[,] f = figure.GetObj();
             int y;
@@ -103,7 +88,7 @@ namespace Tetris
             }
         }
 
-        public void Turn()
+        public override void Turn()
         {
             // если фигура находится возле стены, то не двигаем(нет места)
             if (coord.x <= 1 || coord.x >= GameField.WIDTH_F - 2)
@@ -190,7 +175,7 @@ namespace Tetris
             }
         }
 
-        public void FastDown(GameField gameField)
+        public override void FastDown(GameField gameField)
         {
             // пока фигура не коснулась пола или другой фигуры
             while (!CheckCollision.CheckFinalPoint(this, gameField))

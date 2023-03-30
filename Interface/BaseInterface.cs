@@ -8,7 +8,7 @@ using static Tetris.EnumColl;
 
 namespace Tetris
 {
-    public class BaseInterface : Interface
+    public abstract class BaseInterface
     {
         public const Color colorSelect = Color.GREEN;
         protected List<IElement> elements;
@@ -98,6 +98,6 @@ namespace Tetris
             }
         }
 
-        public virtual void InitialInterface() { }
+        public abstract void InitialInterface();
     }
 }

@@ -24,7 +24,7 @@ namespace Tetris
             }
 
             // фигура
-            IObjFigure objFigure = new ObjFigure(TypeFigure.SQUARE, new Coord((Console.BufferWidth / 2) + 16, (Console.BufferHeight / 7) + 7));
+            BaseObjFigure objFigure = new ObjFigure(TypeFigure.SQUARE, new Coord((Console.BufferWidth / 2) + 16, (Console.BufferHeight / 7) + 7));
             elements.Add(new FigureElement(objFigure));
 
             // меню

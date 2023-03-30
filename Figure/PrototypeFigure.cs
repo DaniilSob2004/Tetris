@@ -14,7 +14,7 @@ namespace Tetris
     {
         public const int N_TYPE_FIGURES = 7;
         public const int N_ALL_PROTOTYPES = 19;
-        private static IFigure[] items = new IFigure[N_ALL_PROTOTYPES];
+        private static BaseFigure[] items = new BaseFigure[N_ALL_PROTOTYPES];
 
         public static void InitPrototype()
         {
@@ -47,10 +47,10 @@ namespace Tetris
             items[18] = new Figure(new int[,] { { 1, 0, 0 }, { 1, 1, 0 }, { 1, 0, 0 } }, TypeFigure.T4, Color.BLUE);
         }
 
-        public static IFigure GetByType(TypeFigure type)
+        public static BaseFigure GetByType(TypeFigure type)
         {
             // найти прототип IFigure по типу и вернуть клон
-            foreach (IFigure figure in items)
+            foreach (BaseFigure figure in items)
             {
                 if (figure.GetTypeFigure() == type)
                 {

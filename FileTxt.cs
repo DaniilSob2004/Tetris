@@ -39,6 +39,11 @@ namespace Tetris
                 // проверка существует ли файл
                 if (!IsValidFile(value)) throw new Exception("No such file!");
 
+                // проверка является ли этот файл .txt
+                Regex reg = new Regex(@"\.txt$");
+                Match match = reg.Match(value);
+                if (!match.Success) throw new Exception("this is not a .txt file!");
+
                 fileName = value;
             }
         }
