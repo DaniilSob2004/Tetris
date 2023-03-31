@@ -7,15 +7,16 @@ using static Tetris.EnumColl;
 
 
 // ПАТТЕРН PROTOTYPE
-// Прототипы объектов IFigure будут хранится в хранилище PrototypeFigure
+// Прототипы объектов BaseFigure будут хранится в хранилище PrototypeFigure
 namespace Tetris
 {
-    public abstract class BaseFigure
+    // реализуем интерфейс ICloneable
+    public abstract class BaseFigure : ICloneable
     {
         public const int SIZE = 3;
-        private int[,] obj = new int[SIZE, SIZE];  // массив 3x3 для фигуры
-        private TypeFigure type;
-        private Color color;
+        protected int[,] obj = new int[SIZE, SIZE];  // массив 3x3 для фигуры
+        protected TypeFigure type;
+        protected Color color;
 
         public BaseFigure(int[,] obj, TypeFigure type, Color color)
         {
@@ -39,6 +40,6 @@ namespace Tetris
             return color;
         }
 
-        public abstract BaseFigure Clone();
+        public abstract object Clone();
     }
 }

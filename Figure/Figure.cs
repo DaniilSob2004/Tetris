@@ -14,15 +14,20 @@ namespace Tetris
             base(obj, type, color)
         { }
 
-        // конструктор с параметром этого же объекта
-        public Figure(BaseFigure figure) :
-            this(figure.GetObj(), figure.GetTypeFigure(), figure.GetColor())
-        { }
-
-        public override BaseFigure Clone()
+        public override object Clone()
         {
-            // возвращается клон этого же объекта
-            return new Figure(this);
+            int[,] copyObj = new int[SIZE, SIZE];
+
+            // глубокое копирование массива:
+            for (int i = 0; i < SIZE; i++)
+            {
+                for (int j = 0; j < SIZE; j++)
+                {
+                    copyObj[i, j] = obj[i, j];
+                }
+            }
+
+            return new Figure(copyObj, type, color);
         }
     }
 }

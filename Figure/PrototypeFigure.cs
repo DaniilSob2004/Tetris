@@ -54,7 +54,7 @@ namespace Tetris
             {
                 if (figure.GetTypeFigure() == type)
                 {
-                    return figure.Clone();
+                    return (BaseFigure)figure.Clone();
                 }
             }
             throw new Exception("There is no figure for this type!");
