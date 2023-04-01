@@ -11,11 +11,12 @@ namespace Tetris
     public class ObjFigure : BaseObjFigure
     {
         public ObjFigure(TypeFigure type, Coord coord) : 
-            base(type, coord)
-        { }
+            base(type, coord) { }
 
         public override void Move(Direction direction, GameField gameField)
         {
+            if (gameField == null) throw new Exception("Reference GameField must be not null!");
+
             Hide();  // удаляем фигуру
 
             switch (direction)
@@ -25,18 +26,32 @@ namespace Tetris
                     break;
 
                 case Direction.LEFT:
-                    // если столкновения с левой стеной нет, то двигаем
-                    if (!CheckCollision.CheckLeftCollision(this, gameField))
+                    try
                     {
-                        coord.x -= 1;
+                        // если столкновения с левой стеной нет, то двигаем
+                        if (!CheckCollision.CheckLeftCollision(this, gameField))
+                        {
+                            coord.x -= 1;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
                     }
                     break;
 
                 case Direction.RIGHT:
-                    // если столкновения с правой стеной нет, то двигаем
-                    if (!CheckCollision.CheckRightCollision(this, gameField))
+                    try
                     {
-                        coord.x += 1;
+                        // если столкновения с правой стеной нет, то двигаем
+                        if (!CheckCollision.CheckRightCollision(this, gameField))
+                        {
+                            coord.x += 1;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
                     }
                     break;
             }
@@ -44,14 +59,15 @@ namespace Tetris
 
         public override void Show()
         {
-            int[,] f = figure.GetObj();
+            int[,] f = figure.Obj;
             int y = 0;
 
-            // насколько будет отображаться фигура, т.к она появляется сверху
+            // насколько будет отображаться фигура(вдруг она не вся появилась)
             if (coord.y <= 2) y = coord.y;
             else y = 3;
 
-            SetForegroundColor(figure.GetColor());
+            SetForegroundColor(figure.Color);
+
             for (int i = 0; i < y; i++)
             {
                 for (int x = coord.x - 1; x <= coord.x + 1; x++)
@@ -63,12 +79,13 @@ namespace Tetris
                     }
                 }
             }
+
             SetForegroundColor(Color.WHITE);
         }
 
         public override void Hide()
         {
-            int[,] f = figure.GetObj();
+            int[,] f = figure.Obj;
             int y;
 
             // насколько фигура была уже отображена, т.к она появляется сверху
@@ -99,7 +116,7 @@ namespace Tetris
             Hide();  // удаляем фигуру
 
             // в зависимости от типа фигуры который был, получаем новый тип
-            switch (figure.GetTypeFigure())
+            switch (figure.Type)
             {
                 case TypeFigure.LINE1:
                     figure = PrototypeFigure.GetByType(TypeFigure.LINE2);
@@ -177,13 +194,22 @@ namespace Tetris
 
         public override void FastDown(GameField gameField)
         {
+            if (gameField == null) throw new Exception("Reference GameField must be not null!");
+
             // пока фигура не коснулась пола или другой фигуры
-            while (!CheckCollision.CheckFinalPoint(this, gameField))
+            try
             {
-                // двигаем и отображаем
-                Move(Direction.DOWN, gameField);
-                Show();
-                Thread.Sleep(10);
+                while (!CheckCollision.CheckFinalPoint(this, gameField))
+                {
+                    // двигаем и отображаем
+                    Move(Direction.DOWN, gameField);
+                    Show();
+                    Thread.Sleep(10);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
     }

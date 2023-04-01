@@ -20,7 +20,7 @@ namespace Tetris
 
         private bool IsValidFile(string fileName)
         {
-            return CheckNull(fileName) && (File.Exists($@"{DIR}\{fileName}"));
+            return File.Exists($@"{DIR}\{fileName}");
         }
 
         public FileTxt(string fileName)
@@ -42,7 +42,7 @@ namespace Tetris
                 // проверка является ли этот файл .txt
                 Regex reg = new Regex(@"\.txt$");
                 Match match = reg.Match(value);
-                if (!match.Success) throw new Exception("this is not a .txt file!");
+                if (!match.Success) throw new Exception("This is not a .txt file!");
 
                 fileName = value;
             }

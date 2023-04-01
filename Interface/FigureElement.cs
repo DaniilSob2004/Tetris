@@ -18,6 +18,12 @@ namespace Tetris
             SetValue(objFigure);
         }
 
+        public Color Color
+        {
+            get { return objFigure.ObjFigure.Color; }
+            set { }
+        }
+
         public string GetValue()
         {
             return value;
@@ -25,15 +31,11 @@ namespace Tetris
 
         public void SetValue(object value)
         {
-            objFigure = (BaseObjFigure)value;
-        }
+            BaseObjFigure obj = value as BaseObjFigure;
+            if (obj == null) throw new Exception("Reference object must be BaseObjFigure!");
 
-        public Color GetColor()
-        {
-            return objFigure.GetFigure().GetColor();
+            objFigure = obj;
         }
-
-        public void SetColor(Color color) { }
 
         public void Show()
         {

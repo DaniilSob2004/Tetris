@@ -19,14 +19,14 @@ namespace Tetris
             this.coord = coord;
         }
 
-        public BaseFigure GetFigure()
+        public BaseFigure ObjFigure
         {
-            return figure;
+            get { return figure; }
         }
 
-        public Coord GetCoord()
+        public Coord Coord
         {
-            return coord;
+            get { return coord; }
         }
 
         public abstract void Move(Direction direction, GameField gameField);

@@ -52,7 +52,7 @@ namespace Tetris
             // найти прототип IFigure по типу и вернуть клон
             foreach (BaseFigure figure in items)
             {
-                if (figure.GetTypeFigure() == type)
+                if (figure.Type == type)
                 {
                     return (BaseFigure)figure.Clone();
                 }

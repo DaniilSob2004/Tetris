@@ -17,11 +17,11 @@ namespace Tetris
         private void BeginSetting()
         {
             // устанавливаем начальные значения игрового поля (стены и пустоту)
-            for (int i = 0; i < field.GetLength(0); i++)
+            for (int i = 0; i < HEIGHT_F; i++)
             {
-                for (int j = 0; j < field.GetLength(1); j++)
+                for (int j = 0; j < WIDTH_F; j++)
                 {
-                    if (i == 0 || j == 0 || i == field.GetLength(0) - 1 || j == field.GetLength(1) - 1)
+                    if (i == 0 || j == 0 || i == HEIGHT_F - 1 || j == WIDTH_F - 1)
                     {
                         field[i, j] = (int)Field.WALL;
                     }
@@ -35,6 +35,7 @@ namespace Tetris
 
         private int GetNumCleanLine()
         {
+            // возвращает кол-во заполненных линий на игровом поле
             bool flag;
 
             for (int i = 0; i < HEIGHT_F; i++)
@@ -71,9 +72,10 @@ namespace Tetris
         {
             // отображаем игровое поле
             Console.SetCursorPosition(0, 0);
-            for (int i = 0; i < field.GetLength(0); i++)
+
+            for (int i = 0; i < HEIGHT_F; i++)
             {
-                for (int j = 0; j < field.GetLength(1); j++)
+                for (int j = 0; j < WIDTH_F; j++)
                 {
                     if (field[i, j] == (int)Field.WALL)
                     {
@@ -93,9 +95,9 @@ namespace Tetris
         public void Clear()
         {
             // очищаем игровое поле от элементов(фигур)
-            for (int i = 0; i < field.GetLength(0); i++)
+            for (int i = 0; i < HEIGHT_F; i++)
             {
-                for (int j = 0; j < field.GetLength(1); j++)
+                for (int j = 0; j < WIDTH_F; j++)
                 {
                     if (field[i, j] == (int)Field.ELEMENT)
                     {
@@ -108,8 +110,10 @@ namespace Tetris
 
         public void AddFigure(BaseObjFigure figure)
         {
-            int[,] obj = figure.GetFigure().GetObj();  // массив частей нашей фигуры
-            Coord coord = figure.GetCoord();  // координаты фигуры
+            if (figure == null) throw new Exception("Reference BaseObjFigure must not null!");
+
+            int[,] obj = figure.ObjFigure.Obj;  // массив частей нашей фигуры
+            Coord coord = figure.Coord;  // координаты фигуры
 
             // переносим части фигуры на игровое поле
             for (int i = 0; i < Figure.SIZE; i++)
@@ -127,7 +131,6 @@ namespace Tetris
         public void CleanLine(ref int nLine)
         {
             int y = 0;
-            Random r = new Random();
 
             while (y != -1)
             {

@@ -11,8 +11,7 @@ namespace Tetris
     public class Figure : BaseFigure
     {
         public Figure(int[,] obj, TypeFigure type, Color color) :
-            base(obj, type, color)
-        { }
+            base(obj, type, color) { }
 
         public override object Clone()
         {

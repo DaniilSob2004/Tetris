@@ -10,8 +10,7 @@ namespace Tetris
 {
     public interface IElement
     {
-        public Color GetColor();
-        public void SetColor(Color color);
+        public Color Color { get; set; }
         public string GetValue();
         public void SetValue(object value);
         public void Show();

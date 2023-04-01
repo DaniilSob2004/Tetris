@@ -25,19 +25,19 @@ namespace Tetris
             this.color = color;
         }
 
-        public int[,] GetObj()
+        public int[,] Obj
         {
-            return obj;
+            get { return obj; }
         }
 
-        public TypeFigure GetTypeFigure()
+        public TypeFigure Type
         {
-            return type;
+            get { return type; }
         }
 
-        public Color GetColor()
+        public Color Color
         {
-            return color;
+            get { return color; }
         }
 
         public abstract object Clone();

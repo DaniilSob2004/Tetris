@@ -23,7 +23,7 @@ namespace Tetris
             // возвращает выбранный элемент по указанному цвету, иначе исключение
             foreach (IElement elem in elements)
             {
-                if (elem.GetColor() == colorSelect)
+                if (elem.Color == colorSelect)
                 {
                     return elem;
                 }
@@ -62,20 +62,21 @@ namespace Tetris
             for (int i = 0; i < elementsMenu.Count; i++)
             {
                 // находим элемент который был выбран
-                if (elementsMenu[i].GetColor() == colorSelect)
+                if (elementsMenu[i].Color == colorSelect)
                 {
-                    elementsMenu[i].SetColor(Color.WHITE);
+                    elementsMenu[i].Color = Color.WHITE;
 
                     // если это последний элемент, то делаем выбранный элемент первым 
                     if (i == elementsMenu.Count - 1)
                     {
-                        elementsMenu[0].SetColor(colorSelect);
+                        elementsMenu[0].Color = colorSelect;
                     }
                     // еиначе, делаем выбранный элемент следующий
                     else
                     {
-                        elementsMenu[i + 1].SetColor(colorSelect);
+                        elementsMenu[i + 1].Color = colorSelect;
                     }
+
                     Show();  // показываем изменения
                     break;
                 }
@@ -92,10 +93,7 @@ namespace Tetris
 
         public IElement this[string value]
         {
-            get
-            {
-                return GetElementByValue(value);
-            }
+            get { return GetElementByValue(value); }
         }
 
         public abstract void InitialInterface();

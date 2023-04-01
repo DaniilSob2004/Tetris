@@ -15,6 +15,8 @@ namespace Tetris
 
         private static void PlaySound(string path)
         {
+            if (path == null) throw new Exception("Reference string must be not null!");
+
             sound.SoundLocation = path;
             sound.Play();
         }

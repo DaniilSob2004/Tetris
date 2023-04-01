@@ -11,19 +11,21 @@ namespace Tetris
     public class TextLabel : Element
     {
         public TextLabel(string title, Color color, Coord coord) :
-            base(title, color, coord)
-        { }
+            base(title, color, coord) { }
 
         public override void SetValue(object value)
         {
-            this.value = (string)value;
+            string obj = value as string;
+            if (obj == null) throw new Exception("Reference object must be string!");
+
+            this.value = obj;
         }
 
         public override void Show()
         {
             // устанавливаем курсор, меняем цвет и отображаем метку
             Console.SetCursorPosition(coord.x, coord.y);
-            SetForegroundColor(color);
+            SetForegroundColor(Color);
             Console.WriteLine(value);
             SetForegroundColor(Color.WHITE);
         }

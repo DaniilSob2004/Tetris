@@ -12,9 +12,12 @@ namespace Tetris
     {
         public static bool CheckFinalPoint(BaseObjFigure figure, GameField gameField)
         {
+            if (figure == null) throw new Exception("Reference BaseObjFigure must be not null!");
+            if (gameField == null) throw new Exception("Reference GameField must be not null!");
+
             int[,] field = gameField.GetField();  // массив игрового поля
-            int[,] obj = figure.GetFigure().GetObj();  // массив нашей фигуры
-            Coord coord = figure.GetCoord();  // координаты фигуры
+            int[,] obj = figure.ObjFigure.Obj;  // массив нашей фигуры
+            Coord coord = figure.Coord;  // координаты фигуры
             Coord[] arrCoords = new Coord[Figure.SIZE];  // массив координат точек нашей фигуры
 
             // если фигура не полностью появилась на поле
@@ -61,9 +64,12 @@ namespace Tetris
 
         public static bool CheckGameOver(BaseObjFigure figure, GameField gameField)
         {
+            if (figure == null) throw new Exception("Reference BaseObjFigure must be not null!");
+            if (gameField == null) throw new Exception("Reference GameField must be not null!");
+
             int[,] field = gameField.GetField();  // массив игрового поля
-            int[,] obj = figure.GetFigure().GetObj();  // массив нашей фигуры
-            Coord coord = figure.GetCoord();  // координаты фигуры
+            int[,] obj = figure.ObjFigure.Obj;  // массив нашей фигуры
+            Coord coord = figure.Coord;  // координаты фигуры
 
             // если координата y > 3, значит точно не проиграли
             if (coord.y > Figure.SIZE)
@@ -86,9 +92,12 @@ namespace Tetris
 
         public static bool CheckLeftCollision(BaseObjFigure figure, GameField gameField)
         {
+            if (figure == null) throw new Exception("Reference BaseObjFigure must be not null!");
+            if (gameField == null) throw new Exception("Reference GameField must be not null!");
+
             int[,] field = gameField.GetField();  // массив игрового поля
-            int[,] obj = figure.GetFigure().GetObj();  // массив нашей фигуры
-            Coord coord = figure.GetCoord();  // координаты фигуры
+            int[,] obj = figure.ObjFigure.Obj;  // массив нашей фигуры
+            Coord coord = figure.Coord;  // координаты фигуры
             Coord[] arrCoords = new Coord[Figure.SIZE];  // массив координат точек нашей фигуры
 
             // если фигура не полностью появилась на поле
@@ -135,9 +144,12 @@ namespace Tetris
 
         public static bool CheckRightCollision(BaseObjFigure figure, GameField gameField)
         {
+            if (figure == null) throw new Exception("Reference BaseObjFigure must be not null!");
+            if (gameField == null) throw new Exception("Reference GameField must be not null!");
+
             int[,] field = gameField.GetField();  // массив игрового поля
-            int[,] obj = figure.GetFigure().GetObj();  // массив нашей фигуры
-            Coord coord = figure.GetCoord();  // координаты фигуры
+            int[,] obj = figure.ObjFigure.Obj;  // массив нашей фигуры
+            Coord coord = figure.Coord;  // координаты фигуры
             Coord[] arrCoords = new Coord[Figure.SIZE];  // массив координат точек нашей фигуры
 
             // если фигура не полностью появилась на поле
