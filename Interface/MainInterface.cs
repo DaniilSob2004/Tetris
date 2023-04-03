@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Tetris.EnumColl;
+﻿using static Tetris.EnumColl;
 
 
 namespace Tetris
 {
+    // класс, для интерфейса основного меню программы
     public class MainInterface : BaseInterface
     {
-        // создаём основной интерфейс программы
         public override void InitialInterface()
         {
+            // создаём основной интерфейс программы
+
             string[] arrTitles = new string[] { "МЕНЮ", " Начать игру", " Выйти из игры", " Об авторе" };
             Color[] arrColors = new Color[] { Color.CYAN, colorSelect, Color.WHITE, Color.WHITE };
 

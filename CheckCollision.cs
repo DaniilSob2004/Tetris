@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Tetris.EnumColl;
+﻿using static Tetris.EnumColl;
 
 
 namespace Tetris
 {
     public class CheckCollision
     {
+        // проверка коснулась ли фигура пола или другой фигуры на поле
         public static bool CheckFinalPoint(BaseObjFigure figure, GameField gameField)
         {
             if (figure == null) throw new Exception("Reference BaseObjFigure must be not null!");
@@ -18,13 +14,10 @@ namespace Tetris
             int[,] field = gameField.GetField();  // массив игрового поля
             int[,] obj = figure.ObjFigure.Obj;  // массив нашей фигуры
             Coord coord = figure.Coord;  // координаты фигуры
-            Coord[] arrCoords = new Coord[Figure.SIZE];  // массив координат точек нашей фигуры
+            Coord[] arrCoords = new Coord[Figure.SIZE];  // массив координат самых низких точек нашей фигуры
 
             // если фигура не полностью появилась на поле
-            if (coord.y <= 2)
-            {
-                return false;
-            }
+            if (coord.y <= 2) return false;
 
             // заполняем по умолчанию список координат
             for (int i = 0; i < Figure.SIZE; i++)
@@ -35,7 +28,7 @@ namespace Tetris
             // находим 3 самые низкие точки у фигуры
             for (int i = 0; i < Figure.SIZE; i++)
             {
-                for (int j = 2; j >= 0; j--)
+                for (int j = Figure.SIZE - 1; j >= 0; j--)
                 {
                     if (obj[j, i] == (int)Field.ELEMENT)
                     {
@@ -72,10 +65,7 @@ namespace Tetris
             Coord coord = figure.Coord;  // координаты фигуры
 
             // если координата y > 3, значит точно не проиграли
-            if (coord.y > Figure.SIZE)
-            {
-                return false;
-            }
+            if (coord.y > Figure.SIZE) return false;
 
             // проходимся по нижней части фигуры (все три координаты по x)
             for (int x = coord.x - 1; x <= coord.x + 1; x++)
@@ -98,13 +88,10 @@ namespace Tetris
             int[,] field = gameField.GetField();  // массив игрового поля
             int[,] obj = figure.ObjFigure.Obj;  // массив нашей фигуры
             Coord coord = figure.Coord;  // координаты фигуры
-            Coord[] arrCoords = new Coord[Figure.SIZE];  // массив координат точек нашей фигуры
+            Coord[] arrCoords = new Coord[Figure.SIZE];  // массив координат самых левых точек нашей фигуры
 
             // если фигура не полностью появилась на поле
-            if (coord.y <= 2)
-            {
-                return false;
-            }
+            if (coord.y <= 2) return false;
 
             // заполняем по умолчанию список координат
             for (int i = 0; i < Figure.SIZE; i++)
@@ -150,13 +137,10 @@ namespace Tetris
             int[,] field = gameField.GetField();  // массив игрового поля
             int[,] obj = figure.ObjFigure.Obj;  // массив нашей фигуры
             Coord coord = figure.Coord;  // координаты фигуры
-            Coord[] arrCoords = new Coord[Figure.SIZE];  // массив координат точек нашей фигуры
+            Coord[] arrCoords = new Coord[Figure.SIZE];  // массив координат самых правых точек нашей фигуры
 
             // если фигура не полностью появилась на поле
-            if (coord.y <= 2)
-            {
-                return false;
-            }
+            if (coord.y <= 2) return false;
 
             // заполняем по умолчанию список координат
             for (int i = 0; i < Figure.SIZE; i++)

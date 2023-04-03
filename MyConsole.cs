@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 
 namespace Tetris
 {
     public class MyConsole
     {
+        // возвращает цвет символа который находится в консоли по указанным координатам
         public static ConsoleColor GetColor(short x, short y)
         {
             var colors = new ushort[1];

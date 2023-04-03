@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Tetris.EnumColl;
+﻿using static Tetris.EnumColl;
 
 
 namespace Tetris
 {
+    // абстрактный класс, для объекта фигур
     public abstract class BaseObjFigure
     {
         protected BaseFigure figure;

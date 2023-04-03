@@ -1,22 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Media;
+﻿using System.Media;
 
 
 namespace Tetris
 {
     public class GameSound
     {
-        public const string DIR = "Sound";
+        public const string DIR = "Sound";  // название папки 
         private static SoundPlayer sound = new SoundPlayer();
+
+        private static bool IsValidFile(string path)
+        {
+            return File.Exists($"{path}");
+        }
 
         private static void PlaySound(string path)
         {
             if (path == null) throw new Exception("Reference string must be not null!");
 
+            // проверка существует ли файл
+            if (!IsValidFile(path)) throw new Exception("No such that file!");
+
+            // указываем путь к файлу и воспроизводим
             sound.SoundLocation = path;
             sound.Play();
         }

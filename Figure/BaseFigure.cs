@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Tetris.EnumColl;
+﻿using static Tetris.EnumColl;
 
 
 // ПАТТЕРН PROTOTYPE
 // Прототипы объектов BaseFigure будут хранится в хранилище PrototypeFigure
 namespace Tetris
 {
+    // абстрактный класс, для фигур
     // реализуем интерфейс ICloneable
     public abstract class BaseFigure : ICloneable
     {

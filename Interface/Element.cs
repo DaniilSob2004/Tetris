@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Tetris.EnumColl;
+﻿using static Tetris.EnumColl;
 
 
 namespace Tetris
 {
+    // абстрактный класс, для объекта элемента интерфейса программы
     public abstract class Element : IElement
     {
         protected string value;

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Tetris.EnumColl;
+﻿using static Tetris.EnumColl;
 
 
 namespace Tetris
 {
+    // класс, который создаёт фигуру
     public class Figure : BaseFigure
     {
         public Figure(int[,] obj, TypeFigure type, Color color) :
@@ -15,6 +11,8 @@ namespace Tetris
 
         public override object Clone()
         {
+            // создаётся клон объекта
+
             int[,] copyObj = new int[SIZE, SIZE];
 
             // глубокое копирование массива:

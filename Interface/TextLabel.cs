@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Tetris.EnumColl;
+﻿using static Tetris.EnumColl;
 
 
 namespace Tetris
 {
+    // класс для создания текстовой метки
     public class TextLabel : Element
     {
         public TextLabel(string title, Color color, Coord coord) :
@@ -15,7 +11,8 @@ namespace Tetris
 
         public override void SetValue(object value)
         {
-            string obj = value as string;
+            // проверяем тип ссылки переданной в параметре
+            string? obj = value as string;
             if (obj == null) throw new Exception("Reference object must be string!");
 
             this.value = obj;

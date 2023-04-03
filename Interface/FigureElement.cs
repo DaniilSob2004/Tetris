@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Tetris.EnumColl;
+﻿using static Tetris.EnumColl;
 
 
 namespace Tetris
 {
+    // класс для создания объекта фигуры в интерфейсе программы
     public class FigureElement : IElement
     {
         public const string value = "Figure";
@@ -31,7 +27,8 @@ namespace Tetris
 
         public void SetValue(object value)
         {
-            BaseObjFigure obj = value as BaseObjFigure;
+            // проверяем тип ссылки переданной в параметре
+            BaseObjFigure? obj = value as BaseObjFigure;
             if (obj == null) throw new Exception("Reference object must be BaseObjFigure!");
 
             objFigure = obj;

@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Tetris.EnumColl;
+﻿using static Tetris.EnumColl;
 
 
 namespace Tetris
 {
+    // абстрактный класс, для интерфейса меню программы
     public abstract class BaseInterface
     {
         public const Color colorSelect = Color.GREEN;
-        protected List<IElement> elements;
+        protected List<IElement> elements;  // список элемнтов интерфейса
 
         public BaseInterface()
         {
@@ -91,6 +87,7 @@ namespace Tetris
             }
         }
 
+        // для доступа к списку элементов через квадратные скобки
         public IElement this[string value]
         {
             get { return GetElementByValue(value); }

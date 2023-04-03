@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Tetris.EnumColl;
+﻿using static Tetris.EnumColl;
 
 
 // ПАТТЕРН PROTOTYPE
@@ -49,7 +44,7 @@ namespace Tetris
 
         public static BaseFigure GetByType(TypeFigure type)
         {
-            // найти прототип IFigure по типу и вернуть клон
+            // находим прототип IFigure по типу и возвращаем его клон
             foreach (BaseFigure figure in items)
             {
                 if (figure.Type == type)

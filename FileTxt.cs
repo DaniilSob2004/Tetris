@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 
 namespace Tetris
 {
     public class FileTxt
     {
-        public const string DIR = "Files";
+        public const string DIR = "Files";  // название папки
         private string fileName;
 
         private bool CheckNull(string value)
@@ -40,8 +35,7 @@ namespace Tetris
                 if (!IsValidFile(value)) throw new Exception("No such file!");
 
                 // проверка является ли этот файл .txt
-                Regex reg = new Regex(@"\.txt$");
-                Match match = reg.Match(value);
+                Match match = (new Regex(@"\.txt$")).Match(value);
                 if (!match.Success) throw new Exception("This is not a .txt file!");
 
                 fileName = value;

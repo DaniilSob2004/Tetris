@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using static Tetris.EnumColl;
 
 
 namespace Tetris
 {
+    // класс для создания игрового поля
     public class GameField
     {
         public const int WIDTH_F = 24;
@@ -21,10 +19,12 @@ namespace Tetris
             {
                 for (int j = 0; j < WIDTH_F; j++)
                 {
+                    // устанавливаем стенки
                     if (i == 0 || j == 0 || i == HEIGHT_F - 1 || j == WIDTH_F - 1)
                     {
                         field[i, j] = (int)Field.WALL;
                     }
+                    // устанавливаем пустоту
                     else
                     {
                         field[i, j] = (int)Field.EMPTY;
@@ -35,7 +35,8 @@ namespace Tetris
 
         private int GetNumCleanLine()
         {
-            // возвращает кол-во заполненных линий на игровом поле
+            // возвращает первый попавшиеся сверху номер линии (по оси y) которая вся заполнена элементами
+
             bool flag;
 
             for (int i = 0; i < HEIGHT_F; i++)
@@ -55,6 +56,7 @@ namespace Tetris
                 }
             }
 
+            // не найдено
             return -1;
         }
 
@@ -71,12 +73,14 @@ namespace Tetris
         public void Show()
         {
             // отображаем игровое поле
+
             Console.SetCursorPosition(0, 0);
 
             for (int i = 0; i < HEIGHT_F; i++)
             {
                 for (int j = 0; j < WIDTH_F; j++)
                 {
+                    // если это стенка
                     if (field[i, j] == (int)Field.WALL)
                     {
                         SetForegroundColor(Color.DARK_GREEN);
@@ -99,6 +103,7 @@ namespace Tetris
             {
                 for (int j = 0; j < WIDTH_F; j++)
                 {
+                    // если это элемент
                     if (field[i, j] == (int)Field.ELEMENT)
                     {
                         Console.SetCursorPosition(j, i);
@@ -112,16 +117,19 @@ namespace Tetris
         {
             if (figure == null) throw new Exception("Reference BaseObjFigure must not null!");
 
+            // добавление фигуры на игровое поле
+
             int[,] obj = figure.ObjFigure.Obj;  // массив частей нашей фигуры
             Coord coord = figure.Coord;  // координаты фигуры
 
-            // переносим части фигуры на игровое поле
             for (int i = 0; i < Figure.SIZE; i++)
             {
                 for (int x = coord.x - 1; x <= coord.x + 1; x++)
                 {
+                    // если часть фигуры равняется 1(элемент)
                     if (obj[Figure.SIZE - i - 1, x - (coord.x - 1)] == (int)Field.ELEMENT)
                     {
+                        // добавляем на поле
                         field[coord.y - i, x] = (int)Field.ELEMENT;
                     }
                 }
@@ -132,10 +140,12 @@ namespace Tetris
         {
             int y = 0;
 
-            while (y != -1)
+            // пока есть заполненные линии
+            do
             {
                 y = GetNumCleanLine();  // получаем координату y в которой заполнена линия
-                if (y != -1)
+
+                if (y != -1)  // если есть заполненная линия
                 {
                     // воспроизводим звук
                     GameSound.DelLine();
@@ -180,7 +190,7 @@ namespace Tetris
                     // кол-во линий
                     nLine++;
                 }
-            }
+            } while (y != -1);
         }
     }
 }

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-namespace Tetris
+﻿namespace Tetris
 {
     // интерфейс для обновления интерфейса
     public interface IUpdatableInterface
@@ -16,6 +9,7 @@ namespace Tetris
     // реализации интерфейса
     public class UpdatePoints : IUpdatableInterface
     {
+        // обновление очков
         public void Update(Game game)
         {
             if (game == null) throw new Exception("Reference Game must be not null!");
@@ -36,6 +30,7 @@ namespace Tetris
 
     public class UpdateRecordPoints : IUpdatableInterface
     {
+        // обновление рекорда очков
         public void Update(Game game)
         {
             if (game == null) throw new Exception("Reference Game must be not null!");
@@ -56,6 +51,7 @@ namespace Tetris
 
     public class UpdateTime : IUpdatableInterface
     {
+        // обновление времени
         public void Update(Game game)
         {
             if (game == null) throw new Exception("Reference Game must be not null!");
@@ -80,29 +76,34 @@ namespace Tetris
 
     public class UpdateFigure : IUpdatableInterface
     {
+        // обновление фигуры
         public void Update(Game game)
         {
             if (game == null) throw new Exception("Reference Game must be not null!");
 
-            // создаём копию фигуры с другими координатами (которые для интерфейса)
-            BaseObjFigure copyFigure = new ObjFigure(game.NextFigure.ObjFigure.Type, new Coord((Console.BufferWidth / 2) + 16, (Console.BufferHeight / 7) + 7));
+            if (game.NextFigure != null)
+            {
+                // создаём копию фигуры с другими координатами (которые для интерфейса)
+                BaseObjFigure copyFigure = new ObjFigure(game.NextFigure.ObjFigure.Type, new Coord((Console.BufferWidth / 2) + 16, (Console.BufferHeight / 7) + 7));
 
-            try
-            {
-                // удаляем элемент, обновляем и выводим
-                game.UserInterface["Figure"].Hide();
-                game.UserInterface["Figure"].SetValue(copyFigure);
-                game.UserInterface["Figure"].Show();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+                try
+                {
+                    // удаляем элемент, обновляем и выводим
+                    game.UserInterface["Figure"].Hide();
+                    game.UserInterface["Figure"].SetValue(copyFigure);
+                    game.UserInterface["Figure"].Show();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
     }
 
     public class Pause : IUpdatableInterface
     {
+        // обновление при паузе игры
         public void Update(Game game)
         {
             if (game == null) throw new Exception("Reference Game must be not null!");
@@ -123,6 +124,7 @@ namespace Tetris
 
     public class Continue : IUpdatableInterface
     {
+        // обновление при продолжении игры
         public void Update(Game game)
         {
             if (game == null) throw new Exception("Reference Game must be not null!");
