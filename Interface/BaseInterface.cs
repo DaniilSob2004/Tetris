@@ -19,7 +19,7 @@ namespace Tetris
             // возвращает выбранный элемент по указанному цвету, иначе исключение
             foreach (IElement elem in elements)
             {
-                if (elem.Color == colorSelect)
+                if (elem.GetValue()[0] == ' ' && elem.Color == colorSelect)
                 {
                     return elem;
                 }
