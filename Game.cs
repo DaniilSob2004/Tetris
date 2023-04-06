@@ -75,17 +75,20 @@ namespace Tetris
             {
                 sleep = 0;
 
+                // если была нажата кнопка клавиатуры
                 if (Console.KeyAvailable == true)
-                    {
-                        k = Console.ReadKey(true);
-                        Handler();
-                    }
+                {
+                    k = Console.ReadKey(true);
+                    Handler();  // вызываем обработчик
+                }
                 else
                 {
+                    // если игра запущена
                     if (isPlay && figure != null && gameField != null)
                     {
                         try
                         {
+                            // двигаем фигуру вниз
                             figure.Move(Direction.DOWN, gameField);
                         }
                         catch (Exception ex)
@@ -96,45 +99,46 @@ namespace Tetris
                     }
                 }
 
+                // если игра запущена
                 if (isPlay && figure != null && gameField != null && nextFigure != null)
                 {
-                    figure.Show();
-
+                    figure.Show();  // выводим фигуру
                     Thread.Sleep(sleep);
 
                     try
                     {
+                        // если фигура коснулась пола или другой фигуры
                         if (CheckCollision.CheckFinalPoint(figure, gameField))
+                        {
+                            GameSound.DownFigure();
+
+                            gameField.AddFigure(figure);  // добавление фигуры на игровое поле(массив)
+                            figure = nextFigure;
+                            GenFigure();  // генерим следующую фигуру
+                            UpdateInterface(new UpdateFigure());
+
+                            points += POINTS;
+                            UpdateInterface(new UpdatePoints());
+                            CheckRecordPoints();
+
+                            gameField.CleanLine(ref nLine);  // проверяется заполнена ли хоть одна линия на игровом поле
+                            if (nLine != 0)  // если заполненые линии есть
                             {
-                                GameSound.DownFigure();
-
-                                gameField.AddFigure(figure);
-                                figure = nextFigure;
-                                GenFigure();
-                                UpdateInterface(new UpdateFigure());
-
-                                points += POINTS;
+                                points += nLine * POINTS_LINE;
                                 UpdateInterface(new UpdatePoints());
                                 CheckRecordPoints();
 
-                                gameField.CleanLine(ref nLine);
-                                if (nLine != 0)
-                                {
-                                    points += nLine * POINTS_LINE;
-                                    UpdateInterface(new UpdatePoints());
-                                    CheckRecordPoints();
-
-                                    nLine = 0;
-                                    speed -= SPEED_STEP;
-                                }
+                                nLine = 0;
+                                speed -= SPEED_STEP;  // ускоряем падение фигур
                             }
+                        }
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
                     }
 
-
+                    // обновляем время
                     timeOnly = timeOnly.Add(TimeSpan.FromSeconds((float)sleep / 1000));
 
                     try
@@ -148,6 +152,7 @@ namespace Tetris
 
                     try
                     {
+                        // проверка проигрыша
                         if (CheckCollision.CheckGameOver(figure, gameField))
                         {
                             GameOver();
@@ -208,69 +213,69 @@ namespace Tetris
 
             // пользователь нажал 'enter', т.е. выбрал какое-то меню
             else if (k.Key == ConsoleKey.Enter)
+            {
+                IElement elem = userInterface.GetChoiceElem();
+
+                if (elem.GetValue().StartsWith(" Начать игру"))
                 {
-                    IElement elem = userInterface.GetChoiceElem();
-
-                    if (elem.GetValue().StartsWith(" Начать игру"))
-                    {
-                        StartGameSettings();
-                    }
-
-                    else if (elem.GetValue().StartsWith(" Об авторе"))
-                    {
-                        OpenBrowser.OpenGitHub();
-                    }
-
-                    else if (elem.GetValue().StartsWith(" Выйти"))
-                    {
-                        Console.Clear();
-                        SaveRecord();  // запись в файл рекорда
-                        Environment.Exit(0);
-                    }
-
-
-                    else if (elem.GetValue().StartsWith(" Назад"))
-                    {
-                        StartSettings();
-                    }
-
-                    else if (elem.GetValue().StartsWith(" Заново"))
-                    {
-                        StartGameSettings();
-                    }
-
-                    else if (elem.GetValue().StartsWith(" Пауза"))
-                    {
-                        try
-                        {
-                            UpdateInterface(new Pause());
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.Message);
-                        }
-
-                        // останавливаем игру
-                        isPlay = false;
-                    }
-
-                    else if (elem.GetValue().Contains("Продолжить"))
-                    {
-                        try
-                        {
-                            UpdateInterface(new Continue());
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.Message);
-                        }
-
-                        // продолжаем игру
-                        isPlay = true;
-                    }
-
-                    GameSound.ClickBtn();
+                    StartGameSettings();
                 }
+
+                else if (elem.GetValue().StartsWith(" Об авторе"))
+                {
+                    OpenBrowser.OpenGitHub();
+                }
+
+                else if (elem.GetValue().StartsWith(" Выйти"))
+                {
+                    Console.Clear();
+                    SaveRecord();  // запись в файл рекорда
+                    Environment.Exit(0);
+                }
+
+
+                else if (elem.GetValue().StartsWith(" Назад"))
+                {
+                    StartSettings();
+                }
+
+                else if (elem.GetValue().StartsWith(" Заново"))
+                {
+                    StartGameSettings();
+                }
+
+                else if (elem.GetValue().StartsWith(" Пауза"))
+                {
+                    try
+                    {
+                        UpdateInterface(new Pause());
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+
+                    // останавливаем игру
+                    isPlay = false;
+                }
+
+                else if (elem.GetValue().Contains("Продолжить"))
+                {
+                    try
+                    {
+                        UpdateInterface(new Continue());
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+
+                    // продолжаем игру
+                    isPlay = true;
+                }
+
+                GameSound.ClickBtn();
+            }
 
             // игровые кнопки
             if (isPlay && figure != null && gameField != null)
@@ -326,8 +331,10 @@ namespace Tetris
 
         private void CheckRecordPoints()
         {
+            // если рекорд побит
             if (points > recordPoints)
             {
+                // если рекорд побит впервые, то воспроизводим звук
                 if (!brokeRecord)
                 {
                     brokeRecord = true;
@@ -427,7 +434,7 @@ namespace Tetris
             {
                 Console.WriteLine(ex.Message);
             }
-            
+
             // генерим фигуру, сохраняем, снова генерим и выводим какая фигура будет следующей
             GenFigure();
             figure = nextFigure;
