@@ -8,12 +8,12 @@ namespace Tetris
         public const string DIR = "Files";  // название папки
         private string fileName;
 
-        private bool CheckNull(string value)
+        private static bool CheckNull(string value)
         {
             return value != null;
         }
 
-        private bool IsValidFile(string fileName)
+        private static bool IsValidFile(string fileName)
         {
             return File.Exists($@"{DIR}\{fileName}");
         }

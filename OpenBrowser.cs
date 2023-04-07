@@ -3,7 +3,7 @@
 
 namespace Tetris
 {
-    public class OpenBrowser
+    public static class OpenBrowser
     {
         public const string url = "https://github.com/DaniilSob2004";
 

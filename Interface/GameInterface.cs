@@ -10,7 +10,7 @@ namespace Tetris
         {
             // характеристики
             string[] arrTitles = new string[] { "Время:  00:00", "Рекорд:  0", "Очки:  0", "Фигура:  " };
-            Color[] arrColors = new Color[] { Color.CYAN, Color.YELLOW, Color.RED, Color.BLUE };
+            ConsoleColor[] arrColors = new ConsoleColor[] { ConsoleColor.Cyan, ConsoleColor.Yellow, ConsoleColor.Red, ConsoleColor.Blue };
 
             for (int i = 0; i < arrTitles.Length; i++)
             {
@@ -19,12 +19,12 @@ namespace Tetris
             }
 
             // фигура
-            BaseObjFigure objFigure = new ObjFigure(TypeFigure.SQUARE, new Coord((Console.BufferWidth / 2) + 16, (Console.BufferHeight / 7) + 7));
+            BaseObjFigure objFigure = new ObjFigure(TypeFigure.Square, new Coord((Console.BufferWidth / 2) + 16, (Console.BufferHeight / 7) + 7));
             elements.Add(new FigureElement(objFigure));
 
             // меню
             arrTitles = new string[] { " Пауза", " Заново", " Назад" };
-            arrColors = new Color[] { colorSelect, Color.WHITE, Color.WHITE };
+            arrColors = new ConsoleColor[] { colorSelect, ConsoleColor.White, ConsoleColor.White };
 
             for (int i = 0; i < arrTitles.Length; i++)
             {

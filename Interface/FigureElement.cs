@@ -14,7 +14,7 @@ namespace Tetris
             SetValue(objFigure);
         }
 
-        public Color Color
+        public ConsoleColor Color
         {
             get { return objFigure.ObjFigure.Color; }
             set { }

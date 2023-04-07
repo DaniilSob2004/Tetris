@@ -14,7 +14,7 @@ namespace Tetris
 ███─████─▄█▀███─████─▄─▄██─██▄▄▄▄─█
 ▀▀▄▄▄▀▀▄▄▄▄▄▀▀▄▄▄▀▀▄▄▀▄▄▀▄▄▄▀▄▄▄▄▄▀".Split('\n');
 
-            SetForegroundColor(Color.CYAN);
+            Console.ForegroundColor = ConsoleColor.Cyan;
             for (int i = 0; i < logo.Length; i++)
             {
                 Console.SetCursorPosition((Console.BufferWidth / 7) + 1, i);
@@ -29,7 +29,7 @@ namespace Tetris
             ShowLogo();  // вывод лого ТЕТРИС
 
             string[] arrTitles = new string[] { "МЕНЮ", " Начать игру", " Выйти из игры", " Об авторе" };
-            Color[] arrColors = new Color[] { Color.CYAN, colorSelect, Color.WHITE, Color.WHITE };
+            ConsoleColor[] arrColors = new ConsoleColor[] { ConsoleColor.Cyan, colorSelect, ConsoleColor.White, ConsoleColor.White };
 
             for (int i = 0; i < arrTitles.Length; i++)
             {

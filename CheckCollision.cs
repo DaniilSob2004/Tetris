@@ -3,7 +3,7 @@
 
 namespace Tetris
 {
-    public class CheckCollision
+    public static class CheckCollision
     {
         // проверка коснулась ли фигура пола или другой фигуры на поле
         public static bool CheckFinalPoint(BaseObjFigure figure, GameField gameField)
@@ -30,7 +30,7 @@ namespace Tetris
             {
                 for (int j = Figure.SIZE - 1; j >= 0; j--)
                 {
-                    if (obj[j, i] == (int)Field.ELEMENT)
+                    if (obj[j, i] == (int)Field.Element)
                     {
                         arrCoords[i].x = coord.x + (i - 1);
                         arrCoords[i].y = coord.y + (j - 2);
@@ -45,7 +45,7 @@ namespace Tetris
                 if (arrCoords[i].x != -1 && arrCoords[i].y != -1)
                 {
                     // если следующая координата по y указывает на элемент или пол, то столкновение
-                    if (field[arrCoords[i].y + 1, arrCoords[i].x] == (int)Field.ELEMENT || field[arrCoords[i].y + 1, arrCoords[i].x] == (int)Field.WALL)
+                    if (field[arrCoords[i].y + 1, arrCoords[i].x] == (int)Field.Element || field[arrCoords[i].y + 1, arrCoords[i].x] == (int)Field.Wall)
                     {
                         return true;
                     }
@@ -71,7 +71,7 @@ namespace Tetris
             for (int x = coord.x - 1; x <= coord.x + 1; x++)
             {
                 // если хотя бы одна из нижних частей фигуры коснётся элемента, то проигрыш
-                if (obj[Figure.SIZE - 1, x - (coord.x - 1)] == (int)Field.ELEMENT && field[coord.y + 1, x] == (int)Field.ELEMENT)
+                if (obj[Figure.SIZE - 1, x - (coord.x - 1)] == (int)Field.Element && field[coord.y + 1, x] == (int)Field.Element)
                 {
                     return true;
                 }
@@ -104,7 +104,7 @@ namespace Tetris
             {
                 for (int j = 0; j < Figure.SIZE; j++)
                 {
-                    if (obj[i, j] == (int)Field.ELEMENT)
+                    if (obj[i, j] == (int)Field.Element)
                     {
                         arrCoords[i].x = coord.x + (j - 1);
                         arrCoords[i].y = coord.y + (i - 2);
@@ -119,7 +119,7 @@ namespace Tetris
                 if (arrCoords[i].x != -1 && arrCoords[i].y != -1)
                 {
                     // если следующая координата по x влево указывает на элемент или пол, то столкновение
-                    if (field[arrCoords[i].y, arrCoords[i].x - 1] == (int)Field.ELEMENT || field[arrCoords[i].y, arrCoords[i].x - 1] == (int)Field.WALL)
+                    if (field[arrCoords[i].y, arrCoords[i].x - 1] == (int)Field.Element || field[arrCoords[i].y, arrCoords[i].x - 1] == (int)Field.Wall)
                     {
                         return true;
                     }
@@ -153,7 +153,7 @@ namespace Tetris
             {
                 for (int j = Figure.SIZE - 1; j >= 0; j--)
                 {
-                    if (obj[i, j] == (int)Field.ELEMENT)
+                    if (obj[i, j] == (int)Field.Element)
                     {
                         arrCoords[i].x = coord.x + (j - 1);
                         arrCoords[i].y = coord.y + (i - 2);
@@ -168,7 +168,7 @@ namespace Tetris
                 if (arrCoords[i].x != -1 && arrCoords[i].y != -1)
                 {
                     // если следующая координата по x вправо указывает на элемент или пол, то столкновение
-                    if (field[arrCoords[i].y, arrCoords[i].x + 1] == (int)Field.ELEMENT || field[arrCoords[i].y, arrCoords[i].x + 1] == (int)Field.WALL)
+                    if (field[arrCoords[i].y, arrCoords[i].x + 1] == (int)Field.Element || field[arrCoords[i].y, arrCoords[i].x + 1] == (int)Field.Wall)
                     {
                         return true;
                     }

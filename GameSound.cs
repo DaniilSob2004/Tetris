@@ -3,7 +3,7 @@
 
 namespace Tetris
 {
-    public class GameSound
+    public static class GameSound
     {
         public const string DIR = "Sound";  // название папки 
         private static SoundPlayer sound = new SoundPlayer();
@@ -20,9 +20,12 @@ namespace Tetris
             // проверка существует ли файл
             if (!IsValidFile(path)) throw new Exception("No such that file!");
 
-            // указываем путь к файлу и воспроизводим
-            sound.SoundLocation = path;
-            sound.Play();
+            using (sound)
+            {
+                // указываем путь к файлу и воспроизводим
+                sound.SoundLocation = path;
+                sound.Play();
+            }
         }
 
         public static void ChoiceMenu()

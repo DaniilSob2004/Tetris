@@ -12,9 +12,9 @@ namespace Tetris
         public const int SIZE = 3;
         protected int[,] obj = new int[SIZE, SIZE];  // массив 3x3 для фигуры
         protected TypeFigure type;
-        protected Color color;
+        protected ConsoleColor color;
 
-        public BaseFigure(int[,] obj, TypeFigure type, Color color)
+        public BaseFigure(int[,] obj, TypeFigure type, ConsoleColor color)
         {
             this.obj = obj;
             this.type = type;
@@ -31,7 +31,7 @@ namespace Tetris
             get { return type; }
         }
 
-        public Color Color
+        public ConsoleColor Color
         {
             get { return color; }
         }

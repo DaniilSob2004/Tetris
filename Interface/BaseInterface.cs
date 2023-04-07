@@ -6,7 +6,7 @@ namespace Tetris
     // абстрактный класс, для интерфейса меню программы
     public abstract class BaseInterface
     {
-        public const Color colorSelect = Color.GREEN;
+        public const ConsoleColor colorSelect = ConsoleColor.Green;
         protected List<IElement> elements;  // список элемнтов интерфейса
 
         public BaseInterface()
@@ -60,7 +60,7 @@ namespace Tetris
                 // находим элемент который был выбран
                 if (elementsMenu[i].Color == colorSelect)
                 {
-                    elementsMenu[i].Color = Color.WHITE;
+                    elementsMenu[i].Color = ConsoleColor.White;
 
                     // если это последний элемент, то делаем выбранный элемент первым 
                     if (i == elementsMenu.Count - 1)

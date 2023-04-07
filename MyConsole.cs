@@ -3,7 +3,7 @@
 
 namespace Tetris
 {
-    public class MyConsole
+    public static class MyConsole
     {
         // возвращает цвет символа который находится в консоли по указанным координатам
         public static ConsoleColor GetColor(short x, short y)

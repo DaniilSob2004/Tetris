@@ -6,7 +6,7 @@ namespace Tetris
     // интерфейс для элементов интерфейса программы
     public interface IElement
     {
-        public Color Color { get; set; }
+        public ConsoleColor Color { get; set; }
         public string GetValue();
         public void SetValue(object value);
         public void Show();

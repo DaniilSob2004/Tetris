@@ -6,7 +6,7 @@ namespace Tetris
     // класс для создания текстовой метки
     public class TextLabel : Element
     {
-        public TextLabel(string title, Color color, Coord coord) :
+        public TextLabel(string title, ConsoleColor color, Coord coord) :
             base(title, color, coord) { }
 
         public override void SetValue(object value)
@@ -22,9 +22,9 @@ namespace Tetris
         {
             // устанавливаем курсор, меняем цвет и отображаем метку
             Console.SetCursorPosition(coord.x, coord.y);
-            SetForegroundColor(Color);
+            Console.ForegroundColor = Color;
             Console.WriteLine(value);
-            SetForegroundColor(Color.WHITE);
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public override void Hide()

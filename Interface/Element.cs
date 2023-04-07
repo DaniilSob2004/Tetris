@@ -9,14 +9,14 @@ namespace Tetris
         protected string value;
         protected Coord coord;
 
-        public Element(string value, Color color, Coord coord)
+        public Element(string value, ConsoleColor color, Coord coord)
         {
             SetValue(value);
             Color = color;
             this.coord = coord;
         }
 
-        public Color Color { get; set; }
+        public ConsoleColor Color { get; set; }
 
         public string GetValue()
         {

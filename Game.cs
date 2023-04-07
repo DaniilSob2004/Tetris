@@ -10,15 +10,9 @@ namespace Tetris
 {
     public class Game
     {
-        public const int WIDTH = 48;
-        public const int HEIGHT = 21;
-        public const int POINTS_LINE = 10;
-        public const int POINTS = 5;
-        public const int MIN_SPEED = 300;
-        public const int MAX_SPEED = 100;
-        public const int SPEED_STEP = 50;
-        public const string fileNameRecord = "record.txt";
+        enum GameValue { Width = 48, Height = 21, PointsLine = 10, Points = 5, MinSpeed = 300, MaxSpeed = 100, SpeedStep = 50 };
 
+        public const string fileNameRecord = "record.txt";
         private readonly int RECORD_POINTS;
 
         private BaseInterface userInterface;
@@ -89,7 +83,7 @@ namespace Tetris
                         try
                         {
                             // двигаем фигуру вниз
-                            figure.Move(Direction.DOWN, gameField);
+                            figure.Move(Direction.Down, gameField);
                         }
                         catch (Exception ex)
                         {
@@ -117,19 +111,24 @@ namespace Tetris
                             GenFigure();  // генерим следующую фигуру
                             UpdateInterface(new UpdateFigure());
 
-                            points += POINTS;
+                            points += (int)GameValue.Points;
                             UpdateInterface(new UpdatePoints());
                             CheckRecordPoints();
 
                             gameField.CleanLine(ref nLine);  // проверяется заполнена ли хоть одна линия на игровом поле
                             if (nLine != 0)  // если заполненые линии есть
                             {
-                                points += nLine * POINTS_LINE;
+                                points += nLine * (int)GameValue.PointsLine;
                                 UpdateInterface(new UpdatePoints());
                                 CheckRecordPoints();
 
                                 nLine = 0;
-                                speed -= SPEED_STEP;  // ускоряем падение фигур
+
+                                // если скорость не максимальная, то изменяем скорость
+                                if (speed > (int)GameValue.MaxSpeed)
+                                {
+                                    speed -= (int)GameValue.SpeedStep;  // ускоряем падение фигур
+                                }
                             }
                         }
                     }
@@ -182,9 +181,9 @@ namespace Tetris
             {
                 // выводим
                 Console.SetCursorPosition(Console.BufferWidth / 2 - (lostMess.Length / 2), Console.WindowHeight / 2);
-                SetForegroundColor(Color.RED);
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("ВЫ ПРОИГРАЛИ!");
-                SetForegroundColor(Color.WHITE);
+                Console.ForegroundColor = ConsoleColor.White;
                 Thread.Sleep(270);
 
                 // стираем
@@ -284,7 +283,7 @@ namespace Tetris
                 {
                     try
                     {
-                        figure.Move(Direction.LEFT, gameField);
+                        figure.Move(Direction.Left, gameField);
                     }
                     catch (Exception ex)
                     {
@@ -298,7 +297,7 @@ namespace Tetris
                 {
                     try
                     {
-                        figure.Move(Direction.RIGHT, gameField);
+                        figure.Move(Direction.Right, gameField);
                     }
                     catch (Exception ex)
                     {
@@ -362,7 +361,7 @@ namespace Tetris
             switch (r.Next(0, PrototypeFigure.N_TYPE_FIGURES))
             {
                 case 1:
-                    nextFigure = new ObjFigure(TypeFigure.SQUARE, coord);
+                    nextFigure = new ObjFigure(TypeFigure.Square, coord);
                     break;
 
                 case 2:
@@ -370,7 +369,7 @@ namespace Tetris
                     break;
 
                 case 3:
-                    nextFigure = new ObjFigure(TypeFigure.INVERTED_L1, coord);
+                    nextFigure = new ObjFigure(TypeFigure.InvertedL1, coord);
                     break;
 
                 case 4:
@@ -378,7 +377,7 @@ namespace Tetris
                     break;
 
                 case 5:
-                    nextFigure = new ObjFigure(TypeFigure.INVERTED_Z1, coord);
+                    nextFigure = new ObjFigure(TypeFigure.InvertedZ1, coord);
                     break;
 
                 case 6:
@@ -386,7 +385,7 @@ namespace Tetris
                     break;
 
                 default:
-                    nextFigure = new ObjFigure(TypeFigure.LINE1, coord);
+                    nextFigure = new ObjFigure(TypeFigure.Line1, coord);
                     break;
             }
         }
@@ -411,7 +410,7 @@ namespace Tetris
             // игра начинается (начальные значения)
             isPlay = true;
             brokeRecord = false;
-            speed = MIN_SPEED;
+            speed = (int)GameValue.MinSpeed;
             sleep = speed;
             points = 0;
             timeOnly = new TimeOnly();
@@ -472,8 +471,8 @@ namespace Tetris
 
         private void SetConsole()
         {
-            Console.SetWindowSize(WIDTH, HEIGHT);
-            Console.SetBufferSize(WIDTH, HEIGHT);
+            Console.SetWindowSize((int)GameValue.Width, (int)GameValue.Height);
+            Console.SetBufferSize((int)GameValue.Width, (int)GameValue.Height);
             Console.Title = "Tetris";
             Console.CursorVisible = false;
         }

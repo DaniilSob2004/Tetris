@@ -3,94 +3,43 @@
 
 namespace Tetris
 {
-    public struct EnumColl
+    public static class EnumColl
     {
         public enum Direction
         {
-            DOWN,
-            LEFT,
-            RIGHT
+            Down,
+            Left,
+            Right
         }
 
         public enum Field
         {
-            EMPTY,
-            ELEMENT,
-            WALL
+            Empty,
+            Element,
+            Wall
         }
 
         public enum TypeFigure
         {
-            LINE1,
-            LINE2,
-            SQUARE,
+            Line1,
+            Line2,
+            Square,
             L1,
             L2,
             L3,
             L4,
-            INVERTED_L1,
-            INVERTED_L2,
-            INVERTED_L3,
-            INVERTED_L4,
+            InvertedL1,
+            InvertedL2,
+            InvertedL3,
+            InvertedL4,
             Z1,
             Z2,
-            INVERTED_Z1,
-            INVERTED_Z2,
+            InvertedZ1,
+            InvertedZ2,
             T1,
             T2,
             T3,
             T4
-        }
-
-        public enum Color
-        {
-            WHITE,
-            DARK_GREEN,
-            RED,
-            GREEN,
-            BLUE,
-            YELLOW,
-            CYAN,
-            MAGENTA
-        }
-
-        // Устанавливает цвет текста указанному в параметре
-        public static void SetForegroundColor(Color color)
-        {
-            switch (color)
-            {
-                case Color.DARK_GREEN:
-                    Console.ForegroundColor = ConsoleColor.DarkGreen;
-                    break;
-
-                case Color.RED:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    break;
-
-                case Color.GREEN:
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    break;
-
-                case Color.BLUE:
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    break;
-
-                case Color.YELLOW:
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    break;
-
-                case Color.CYAN:
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                    break;
-
-                case Color.MAGENTA:
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                    break;
-
-                default:
-                    Console.ForegroundColor = ConsoleColor.White;
-                    break;
-            }
         }
     }
 }

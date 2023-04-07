@@ -6,7 +6,7 @@ namespace Tetris
     // класс, который создаёт фигуру
     public class Figure : BaseFigure
     {
-        public Figure(int[,] obj, TypeFigure type, Color color) :
+        public Figure(int[,] obj, TypeFigure type, ConsoleColor color) :
             base(obj, type, color) { }
 
         public override object Clone()

@@ -22,12 +22,12 @@ namespace Tetris
                     // устанавливаем стенки
                     if (i == 0 || j == 0 || i == HEIGHT_F - 1 || j == WIDTH_F - 1)
                     {
-                        field[i, j] = (int)Field.WALL;
+                        field[i, j] = (int)Field.Wall;
                     }
                     // устанавливаем пустоту
                     else
                     {
-                        field[i, j] = (int)Field.EMPTY;
+                        field[i, j] = (int)Field.Empty;
                     }
                 }
             }
@@ -44,7 +44,7 @@ namespace Tetris
                 flag = true;
                 for (int j = 1; j < WIDTH_F - 1; j++)
                 {
-                    if (field[i, j] != (int)Field.ELEMENT)
+                    if (field[i, j] != (int)Field.Element)
                     {
                         flag = false;
                         break;
@@ -81,11 +81,11 @@ namespace Tetris
                 for (int j = 0; j < WIDTH_F; j++)
                 {
                     // если это стенка
-                    if (field[i, j] == (int)Field.WALL)
+                    if (field[i, j] == (int)Field.Wall)
                     {
-                        SetForegroundColor(Color.DARK_GREEN);
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
                         Console.Write(Convert.ToChar(0x2593));
-                        SetForegroundColor(Color.WHITE);
+                        Console.ForegroundColor = ConsoleColor.White;
                     }
                     else
                     {
@@ -93,23 +93,6 @@ namespace Tetris
                     }
                 }
                 Console.WriteLine();
-            }
-        }
-
-        public void Clear()
-        {
-            // очищаем игровое поле от элементов(фигур)
-            for (int i = 0; i < HEIGHT_F; i++)
-            {
-                for (int j = 0; j < WIDTH_F; j++)
-                {
-                    // если это элемент
-                    if (field[i, j] == (int)Field.ELEMENT)
-                    {
-                        Console.SetCursorPosition(j, i);
-                        Console.Write(" ");
-                    }
-                }
             }
         }
 
@@ -127,10 +110,10 @@ namespace Tetris
                 for (int x = coord.x - 1; x <= coord.x + 1; x++)
                 {
                     // если часть фигуры равняется 1(элемент)
-                    if (obj[Figure.SIZE - i - 1, x - (coord.x - 1)] == (int)Field.ELEMENT)
+                    if (obj[Figure.SIZE - i - 1, x - (coord.x - 1)] == (int)Field.Element)
                     {
                         // добавляем на поле
-                        field[coord.y - i, x] = (int)Field.ELEMENT;
+                        field[coord.y - i, x] = (int)Field.Element;
                     }
                 }
             }
@@ -153,9 +136,9 @@ namespace Tetris
                     // удаление заполненой линии
                     for (int j = 1; j < WIDTH_F - 1; j++)
                     {
-                        if (field[y, j] == (int)Field.ELEMENT)
+                        if (field[y, j] == (int)Field.Element)
                         {
-                            field[y, j] = (int)Field.EMPTY;
+                            field[y, j] = (int)Field.Empty;
 
                             Console.SetCursorPosition(j, y);
                             Console.Write(" ");
@@ -168,7 +151,7 @@ namespace Tetris
                     {
                         for (int j = 1; j < WIDTH_F - 1; j++)
                         {
-                            if (field[i, j] == (int)Field.ELEMENT)
+                            if (field[i, j] == (int)Field.Element)
                             {
                                 // запоминаем цвет элемента который был на прошлой позиции
                                 ConsoleColor color = MyConsole.GetColor((short)j, (short)i);
@@ -176,13 +159,13 @@ namespace Tetris
                                 // стираем элемент который был на прошлой позиции
                                 Console.SetCursorPosition(j, i);
                                 Console.Write(" ");
-                                field[i, j] = (int)Field.EMPTY;
+                                field[i, j] = (int)Field.Empty;
 
                                 // отображаем элемент в новой позиции
                                 Console.SetCursorPosition(j, i + 1);
                                 Console.ForegroundColor = color;
                                 Console.WriteLine(Convert.ToChar(0x25A0));
-                                field[i + 1, j] = (int)Field.ELEMENT;
+                                field[i + 1, j] = (int)Field.Element;
                             }
                         }
                     }
