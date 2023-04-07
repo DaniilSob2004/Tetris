@@ -1,6 +1,6 @@
 ======================= TETRIS GAME =======================
 
-![Tetris2](https://user-images.githubusercontent.com/106149184/229513499-8507e92a-843b-4613-ade7-85abd1748b9d.png)
+![Tetris2](https://user-images.githubusercontent.com/106149184/230606974-5ceb3bf8-06e2-440a-a8f5-8f58155dc061.png)
 ![Tetris](https://user-images.githubusercontent.com/106149184/229512833-be4a7256-6841-4f53-b407-bfafe2aa987a.png)
 
 Как пользоваться Интерфейсом:
