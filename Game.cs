@@ -55,12 +55,12 @@ namespace Tetris
         }
 
 
-        public BaseInterface UserInterface { get { return userInterface; } }
-        public BaseObjFigure? NextFigure { get { return nextFigure; } }
-        public TimeOnly TimeOnly { get { return timeOnly; } }
-        public int Points { get { return points; } }
-        public int RecordPoints { get { return recordPoints; } }
-        public int POINTS_RECORD { get { return RECORD_POINTS; } }
+        public BaseInterface UserInterface => userInterface;
+        public BaseObjFigure? NextFigure => nextFigure;
+        public TimeOnly TimeOnly => timeOnly;
+        public int Points => points;
+        public int RecordPoints => recordPoints;
+        public int POINTS_RECORD => RECORD_POINTS;
 
 
         public void StartGame()

@@ -21,20 +21,9 @@ namespace Tetris
             this.color = color;
         }
 
-        public int[,] Obj
-        {
-            get { return obj; }
-        }
-
-        public TypeFigure Type
-        {
-            get { return type; }
-        }
-
-        public ConsoleColor Color
-        {
-            get { return color; }
-        }
+        public int[,] Obj => obj;
+        public TypeFigure Type => type;
+        public ConsoleColor Color => color;
 
         public abstract object Clone();
     }

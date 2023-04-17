@@ -15,15 +15,8 @@ namespace Tetris
             this.coord = coord;
         }
 
-        public BaseFigure ObjFigure
-        {
-            get { return figure; }
-        }
-
-        public Coord Coord
-        {
-            get { return coord; }
-        }
+        public BaseFigure ObjFigure => figure;
+        public Coord Coord => coord;
 
         public abstract void Move(Direction direction, GameField gameField);
         public abstract void Show();
