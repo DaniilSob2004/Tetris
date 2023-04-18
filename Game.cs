@@ -227,9 +227,10 @@ namespace Tetris
 
                 else if (elem.GetValue().StartsWith(" Выйти"))
                 {
-                    Console.Clear();
+                    Exit();
+                    /*Console.Clear();
                     SaveRecord();  // запись в файл рекорда
-                    Environment.Exit(0);
+                    Environment.Exit(0);*/
                 }
 
 
@@ -475,6 +476,9 @@ namespace Tetris
             Console.SetBufferSize((int)GameValue.Width, (int)GameValue.Height);
             Console.Title = "Tetris";
             Console.CursorVisible = false;
+
+            // событие для выхода из приложение(консоли) (Ctrl+C)
+            Console.CancelKeyPress += Console_CancelKeyPress;
         }
 
         private void SaveRecord()
@@ -491,6 +495,18 @@ namespace Tetris
                     Console.WriteLine(ex.Message);
                 }
             }
+        }
+
+        private void Console_CancelKeyPress(object? sender, ConsoleCancelEventArgs e)
+        {
+            Exit();
+        }
+
+        private void Exit()
+        {
+            Console.Clear();
+            SaveRecord();  // запись в файл рекорда
+            Environment.Exit(0);
         }
     }
 }
