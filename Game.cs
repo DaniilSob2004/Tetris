@@ -228,11 +228,7 @@ namespace Tetris
                 else if (elem.GetValue().StartsWith(" Выйти"))
                 {
                     Exit();
-                    /*Console.Clear();
-                    SaveRecord();  // запись в файл рекорда
-                    Environment.Exit(0);*/
                 }
-
 
                 else if (elem.GetValue().StartsWith(" Назад"))
                 {
