@@ -196,10 +196,7 @@ namespace Tetris
                 // вызов статического метода, который переворачивает фигуру
                 TurnFigure(ref figure);
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
         }
 
         public override void FastDown(GameField gameField)
@@ -217,10 +214,7 @@ namespace Tetris
                     Thread.Sleep(10);
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
         }
     }
 }

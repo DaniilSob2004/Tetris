@@ -22,6 +22,7 @@ namespace Tetris
         private FileTxt fileRecord;
 
         private bool isPlay;
+        private bool isHandler;
         private bool brokeRecord;
         private int recordPoints;
         private int points;
@@ -42,16 +43,18 @@ namespace Tetris
                 RECORD_POINTS = int.Parse(fileRecord.ReadFile());
                 recordPoints = RECORD_POINTS;
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
 
             // инициализируем прототипы фигур
             PrototypeFigure.InitPrototype();
 
             SetConsole();
             StartSettings();
+
+            // запускаем в другом потоке движок (для события нажатия клавиши), в параметр движка передаём обработчик
+            Thread t = new Thread(new GameEngine(EventHandler).Start);
+            t.IsBackground = true;
+            t.Start();
         }
 
 
@@ -69,11 +72,10 @@ namespace Tetris
             {
                 sleep = 0;
 
-                // если была нажата кнопка клавиатуры
-                if (Console.KeyAvailable == true)
+                if (isHandler)
                 {
-                    k = Console.ReadKey(true);
-                    Handler();  // вызываем обработчик
+                    Handler();
+                    isHandler = false;
                 }
                 else
                 {
@@ -85,10 +87,8 @@ namespace Tetris
                             // двигаем фигуру вниз
                             figure.Move(Direction.Down, gameField);
                         }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.Message);
-                        }
+                        catch (Exception ex) { Console.WriteLine(ex.Message); }
+
                         sleep = speed;
                     }
                 }
@@ -132,10 +132,7 @@ namespace Tetris
                             }
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
+                    catch (Exception ex) { Console.WriteLine(ex.Message); }
 
                     // обновляем время
                     timeOnly = timeOnly.Add(TimeSpan.FromSeconds((float)sleep / 1000));
@@ -144,10 +141,7 @@ namespace Tetris
                     {
                         UpdateInterface(new UpdateTime());
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
+                    catch (Exception ex) { Console.WriteLine(ex.Message); }
 
                     try
                     {
@@ -157,10 +151,7 @@ namespace Tetris
                             GameOver();
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
+                    catch (Exception ex) { Console.WriteLine(ex.Message); }
                 }
             }
         }
@@ -168,13 +159,12 @@ namespace Tetris
         private void GameOver()
         {
             isPlay = false;
+            string lostMess = "ВЫ ПРОИГРАЛИ!";
+
             Thread.Sleep(1500);
             Console.Clear();
 
-            string lostMess = "ВЫ ПРОИГРАЛИ!";
-
-            // звук смерти
-            GameSound.Died();
+            GameSound.Died();  // звук смерти
 
             // анимация проигрыша
             for (int i = 0; i < 3; i++)
@@ -182,7 +172,7 @@ namespace Tetris
                 // выводим
                 Console.SetCursorPosition(Console.BufferWidth / 2 - (lostMess.Length / 2), Console.WindowHeight / 2);
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("ВЫ ПРОИГРАЛИ!");
+                Console.WriteLine(lostMess);
                 Console.ForegroundColor = ConsoleColor.White;
                 Thread.Sleep(270);
 
@@ -199,7 +189,7 @@ namespace Tetris
             StartSettings();
         }
 
-        private void Handler()
+        public void Handler()
         {
             // обработчик для нажатия кнопок, вызываются определённые методы объектов
 
@@ -215,59 +205,51 @@ namespace Tetris
             {
                 IElement elem = userInterface.GetChoiceElem();
 
-                if (elem.GetValue().StartsWith(" Начать игру"))
+                if (elem.GetValue() == " Начать игру")
                 {
                     StartGameSettings();
                 }
 
-                else if (elem.GetValue().StartsWith(" Об авторе"))
+                else if (elem.GetValue() == " Об авторе")
                 {
                     OpenBrowser.OpenGitHub();
                 }
 
-                else if (elem.GetValue().StartsWith(" Выйти"))
+                else if (elem.GetValue() == " Выйти из игры")
                 {
                     Exit();
                 }
 
-                else if (elem.GetValue().StartsWith(" Назад"))
+                else if (elem.GetValue() == " Назад")
                 {
                     StartSettings();
                 }
 
-                else if (elem.GetValue().StartsWith(" Заново"))
+                else if (elem.GetValue() == " Заново")
                 {
                     StartGameSettings();
                 }
 
-                else if (elem.GetValue().StartsWith(" Пауза"))
+                else if (elem.GetValue() == " Пауза")
                 {
                     try
                     {
                         UpdateInterface(new Pause());
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
+                    catch (Exception ex) { Console.WriteLine(ex.Message); }
 
-                    // останавливаем игру
-                    isPlay = false;
+                    isPlay = false;  // останавливаем игру
                 }
 
-                else if (elem.GetValue().Contains("Продолжить"))
+                else if (elem.GetValue() == " Продолжить")
                 {
                     try
                     {
                         UpdateInterface(new Continue());
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
+                    catch (Exception ex) { Console.WriteLine(ex.Message); }
 
-                    // продолжаем игру
-                    isPlay = true;
+                    isPlay = true;  // продолжаем игру
                 }
 
                 GameSound.ClickBtn();
@@ -282,12 +264,9 @@ namespace Tetris
                     {
                         figure.Move(Direction.Left, gameField);
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
+                    catch (Exception ex) { Console.WriteLine(ex.Message); }
 
-                    sleep = (int)((float)speed / 4.25);
+                    sleep = (int)((float)speed / 4);
                 }
 
                 else if (k.Key == ConsoleKey.RightArrow)
@@ -296,12 +275,9 @@ namespace Tetris
                     {
                         figure.Move(Direction.Right, gameField);
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
+                    catch (Exception ex) { Console.WriteLine(ex.Message); }
 
-                    sleep = (int)((float)speed / 4.25);
+                    sleep = (int)((float)speed / 4);
                 }
 
                 else if (k.Key == ConsoleKey.UpArrow)
@@ -316,10 +292,7 @@ namespace Tetris
                     {
                         figure.FastDown(gameField);
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
+                    catch (Exception ex) { Console.WriteLine(ex.Message); }
                 }
             }
         }
@@ -342,20 +315,16 @@ namespace Tetris
                 {
                     UpdateInterface(new UpdateRecordPoints());
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
             }
         }
 
         private void GenFigure()
         {
-            // генерим на рандоме фигуру
-            Random r = new Random();
             Coord coord = new Coord((GameField.WIDTH_F / 2) - 1, 0);
 
-            switch (r.Next(0, PrototypeFigure.N_TYPE_FIGURES))
+            // генерим на рандоме фигуру
+            switch (new Random().Next(0, PrototypeFigure.N_TYPE_FIGURES))
             {
                 case 1:
                     nextFigure = new ObjFigure(TypeFigure.Square, coord);
@@ -426,10 +395,7 @@ namespace Tetris
                 // обновляем рекорд очков
                 UpdateInterface(new UpdateRecordPoints());
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
 
             // генерим фигуру, сохраняем, снова генерим и выводим какая фигура будет следующей
             GenFigure();
@@ -441,10 +407,7 @@ namespace Tetris
                 // обновляем фигуру
                 UpdateInterface(new UpdateFigure());
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
         }
 
         private void StartSettings()
@@ -493,16 +456,23 @@ namespace Tetris
             }
         }
 
-        private void Console_CancelKeyPress(object? sender, ConsoleCancelEventArgs e)
-        {
-            Exit();
-        }
-
         private void Exit()
         {
             Console.Clear();
             SaveRecord();  // запись в файл рекорда
             Environment.Exit(0);
+        }
+
+        private void Console_CancelKeyPress(object? sender, ConsoleCancelEventArgs e)
+        {
+            Exit();
+        }
+
+        private void EventHandler(ConsoleKeyInfo keyInfo)
+        {
+            // обработчик для нажатия клавиш
+            isHandler = true;
+            k = keyInfo;
         }
     }
 }

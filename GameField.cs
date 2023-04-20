@@ -121,7 +121,7 @@ namespace Tetris
 
         public void CleanLine(ref int nLine)
         {
-            int y = 0;
+            int y;
 
             // пока есть заполненные линии
             do
